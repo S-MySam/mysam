@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accompagnement Personnalisé — MySam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dp:#3B1F6B;--mp:#5A2FA3;--sp:#7B4FCF;
+  --ll:#EDE7FF;--lm:#C9B8F0;
+  --or:#FF6B35;--oh:#E85520;
+  --wh:#FFFFFF;--ow:#FAF9FF;
+  --td:#1A1030;--tm:#4A3870;--tl:#8270AA;
+  --bd:#E0D8F5;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--td);background:var(--wh);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+section{position:relative}
+ul{list-style:none}
+
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:50px;font-size:.95rem;
+  font-weight:600;letter-spacing:.02em;cursor:pointer;
+  border:none;text-decoration:none;transition:all .25s ease;white-space:nowrap
+}
+.btn-or{background:var(--or);color:var(--wh)}
+.btn-or:hover{background:var(--oh);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,53,.35)}
+.btn-pu{background:var(--mp);color:var(--wh)}
+.btn-pu:hover{background:var(--dp);transform:translateY(-2px);box-shadow:0 8px 24px rgba(59,31,107,.3)}
+.btn-wh{background:var(--wh);color:var(--dp)}
+.btn-wh:hover{background:var(--ll);transform:translateY(-2px);box-shadow:0 8px 24px rgba(90,47,163,.18)}
+
+/* NAVBAR */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bd);transition:box-shadow .3s
+}
+.nav.s{box-shadow:0 4px 32px rgba(59,31,107,.10)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.container{padding:0 32px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-img{width:40px;height:40px;object-fit:contain;display:block}
+.logo-text{font-weight:700;font-size:1.2rem;color:var(--dp)}
+.logo-sub{font-size:.65rem;color:var(--tl);font-weight:400;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1}
+
+.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+.nav-links a{padding:8px 14px;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--tm);transition:all .2s}
+.nav-links a:hover{color:var(--mp);background:var(--ll)}
+
+.nav-acts{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.nav-login{font-size:.875rem;font-weight:500;color:var(--mp);padding:8px 12px;border-radius:8px;transition:all .2s}
+.nav-login:hover{background:var(--ll)}
+
+.hburg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;border:none;background:none}
+.hburg span{display:block;width:22px;height:2px;background:var(--dp);border-radius:2px;transition:all .3s}
+
+@media(max-width:768px){
+  .nav-links,.nav-login{display:none}
+  .hburg{display:flex}
+}
+
+/* FOOTER */
+footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:48px;margin-bottom:64px}
+.ft-brand .logo{margin-bottom:16px}
+.ft-brand .logo-text{color:var(--wh)}
+.ft-brand > p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.55);max-width:280px}
+.ft-social{display:flex;gap:10px;margin-top:20px}
+.soc{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;text-decoration:none}
+.soc:hover{background:var(--mp);border-color:var(--mp);color:var(--wh)}
+.ft-col h4{font-size:.88rem;font-weight:700;color:var(--wh);text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px}
+.ft-col ul{display:flex;flex-direction:column;gap:12px}
+.ft-col ul a{font-size:.88rem;color:rgba(255,255,255,.55);transition:color .2s}
+.ft-col ul a:hover{color:var(--lm)}
+.ft-contacts{display:flex;flex-direction:column;gap:14px}
+.fci{display:flex;align-items:flex-start;gap:12px}
+.fci-ico{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;margin-top:1px}
+.fci strong{display:block;font-size:.8rem;font-weight:600;color:var(--wh)}
+.fci span{font-size:.82rem;color:rgba(255,255,255,.5)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.08);padding-top:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.ft-bot p{font-size:.82rem;color:rgba(255,255,255,.35)}
+.ft-links{display:flex;gap:24px}
+.ft-links a{font-size:.82rem;color:rgba(255,255,255,.35);transition:color .2s}
+.ft-links a:hover{color:rgba(255,255,255,.7)}
+
+@media(max-width:1024px){
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:768px){
+  .ft-grid{grid-template-columns:1fr;gap:32px}
+}
+
+/* MAIN CONTENT */
+main{min-height:100vh;padding-top:72px;background:linear-gradient(160deg,var(--ow) 0%,#F5EEFF 100%);position:relative;display:flex;flex-direction:column}
+
+.hero-acc{
+  padding:80px 0;text-align:center;position:relative;z-index:2
+}
+
+.hero-acc h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.2rem);font-weight:700;
+  color:var(--dp);margin-bottom:16px;line-height:1.1
+}
+
+.hero-acc p{
+  font-size:1.05rem;color:var(--tm);max-width:560px;margin:0 auto 8px;line-height:1.75
+}
+
+.breadcrumb{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.88rem;color:var(--tl);margin-bottom:24px;margin-top:8px
+}
+.breadcrumb a{color:var(--mp);text-decoration:underline}
+.breadcrumb a:hover{color:var(--dp)}
+
+/* SERVICE GRID */
+.services-section{flex:1;padding:80px 0 60px;position:relative;z-index:2}
+
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px
+}
+
+.service-card{
+  background:var(--wh);border:2px solid var(--bd);border-radius:20px;
+  padding:36px 28px;cursor:pointer;transition:all .3s ease;
+  text-align:center;display:flex;flex-direction:column;align-items:center;
+  position:relative;overflow:hidden
+}
+
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg,rgba(123,79,207,.05) 0%,rgba(255,107,53,.05) 100%);
+  opacity:0;transition:opacity .3s;z-index:-1
+}
+
+.service-card:hover{
+  border-color:var(--mp);box-shadow:0 8px 32px rgba(59,31,107,.12);
+  transform:translateY(-4px)
+}
+
+.service-card:hover::before{opacity:1}
+
+.service-card.active{
+  background:linear-gradient(135deg,var(--dp) 0%,var(--mp) 100%);
+  border-color:var(--sp);color:var(--wh)
+}
+
+.service-card.active .service-icon,
+.service-card.active .service-title,
+.service-card.active .service-desc{color:var(--wh)}
+
+.service-icon{
+  font-size:3.2rem;margin-bottom:16px;transition:transform .3s
+}
+
+.service-card:hover .service-icon{transform:scale(1.1)}
+
+.service-title{
+  font-size:1.15rem;font-weight:700;color:var(--dp);margin-bottom:10px
+}
+
+.service-desc{
+  font-size:.85rem;color:var(--tl);line-height:1.6
+}
+
+/* SERVICE CONTENT */
+.content-wrapper{
+  min-height:600px;animation:fadeIn .4s ease;position:relative
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.content-panel{display:none}
+.content-panel.active{display:block}
+
+/* CV MAXIMISÉ INTEGRATION */
+#cv-app{width:100%;height:auto}
+
+/* GENERIC SERVICE CONTENT */
+.service-content{
+  background:var(--wh);border:2px solid var(--bd);border-radius:20px;
+  padding:48px;max-width:900px;margin:0 auto
+}
+
+.service-content h2{
+  font-family:'Playfair Display',serif;font-size:2rem;color:var(--dp);
+  margin-bottom:20px;font-weight:700
+}
+
+.service-content p{
+  font-size:1rem;color:var(--tm);line-height:1.8;margin-bottom:20px
+}
+
+.service-content ul{
+  margin:20px 0;padding-left:20px
+}
+
+.service-content li{
+  font-size:.95rem;color:var(--tm);margin-bottom:12px;line-height:1.6
+}
+
+.service-content .btn{margin-top:32px}
+
+/* FLOATING DECORATION */
+.float-decor{
+  position:absolute;pointer-events:none;
+  border-radius:50%;opacity:.08;filter:blur(.5px)
+}
+
+.float-1{width:200px;height:200px;top:10%;right:5%;background:var(--sp)}
+.float-2{width:150px;height:150px;bottom:20%;left:5%;background:var(--or)}
+
+@media(max-width:1024px){
+  .services-grid{grid-template-columns:1fr}
+  .service-content{padding:36px}
+}
+
+@media(max-width:768px){
+  .hero-acc{padding:60px 0}
+  .hero-acc h1{font-size:1.8rem}
+  .services-section{padding:60px 0 40px}
+  .service-card{padding:24px 20px}
+  .service-icon{font-size:2.4rem}
+}
+
+.sec-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mp);margin-bottom:12px
+}
+.sec-label-line{width:28px;height:2px;background:var(--or);border-radius:2px;flex-shrink:0}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav" id="navbar">
+  <div class="container">
+    <div class="nav-in">
+      <a href="index.html#home" class="logo">
+        <div class="logo-mark"><img src="assets/Logo MySam.png" alt="MySam" class="logo-img"/></div>
+        <div>
+          <span class="logo-text">MySam</span>
+          <span class="logo-sub">Conseil &amp; Service</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Accueil</a></li>
+        <li><a href="actualites.html">Actualités</a></li>
+        <li><a href="rendezvous.html">Rendez-vous</a></li>
+        <li><a href="contact.html">Contactez-nous</a></li>
+      </ul>
+      <div class="nav-acts">
+        <a href="connexion.html" class="nav-login">Se connecter</a>
+        <a href="contact.html" class="btn btn-or">Contactez-nous</a>
+      </div>
+      <button class="hburg" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="float-decor float-1"></div>
+  <div class="float-decor float-2"></div>
+
+  <!-- HERO -->
+  <div class="hero-acc">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html#particuliers">Accompagnement Particuliers</a>
+        <span>→</span>
+        <span>Choisissez votre service</span>
+      </div>
+      <h1>Services d'accompagnement</h1>
+      <p>Un suivi professionnel, des outils concrets, des résultats mesurables.<br/>Sélectionnez le service qui répond à votre besoin.</p>
+    </div>
+  </div>
+
+  <!-- SERVICES GRID -->
+  <div class="services-section">
+    <div class="container">
+      <div class="services-grid">
+        <!-- CV MAXIMISÉ -->
+        <div class="service-card active" data-service="cv">
+          <div class="service-icon">📄</div>
+          <div class="service-title">Générer mon CV</div>
+          <div class="service-desc">Créez un CV optimisé en 2 minutes avec l'IA</div>
+        </div>
+
+        <!-- BILAN DE COMPÉTENCES -->
+        <div class="service-card" data-service="bilan">
+          <div class="service-icon">🎯</div>
+          <div class="service-title">Bilan de compétences</div>
+          <div class="service-desc">Clarifiez votre orientation professionnelle</div>
+        </div>
+
+        <!-- PRÉPARATION CANDIDATURES -->
+        <div class="service-card" data-service="preparation">
+          <div class="service-icon">💼</div>
+          <div class="service-title">Préparation aux candidatures</div>
+          <div class="service-desc">Lettre, entretien, stratégie de recherche</div>
+        </div>
+      </div>
+
+      <!-- CONTENT PANELS -->
+      <div class="content-wrapper">
+        <!-- CV MAXIMISÉ PANEL -->
+        <div class="content-panel active" id="panel-cv">
+          <div id="cv-app"></div>
+        </div>
+
+        <!-- BILAN PANEL -->
+        <div class="content-panel" id="panel-bilan">
+          <div class="service-content">
+            <div class="sec-label"><span class="sec-label-line"></span>Bilan de compétences</div>
+            <h2>Clarifiez votre orientation professionnelle</h2>
+            <p>Un bilan de compétences est une démarche personnalisée qui vous aide à faire le point sur vos forces, vos intérêts et vos aspirations professionnelles.</p>
+            
+            <h3 style="font-size:1.2rem;color:var(--dp);margin-top:32px;margin-bottom:16px;font-weight:700">Le processus en 3 étapes</h3>
+            <ul>
+              <li><strong>Autoévaluation complète</strong> — Identifiez vos compétences techniques, vos soft skills et vos valeurs professionnelles</li>
+              <li><strong>Entretiens structurés</strong> — Travaillez avec un coach pour explorer vos motivations et vos blocages</li>
+              <li><strong>Plan d'action personnel</strong> — Définissez un projet clair avec des étapes concrètes et des délais réalistes</li>
+            </ul>
+
+            <h3 style="font-size:1.2rem;color:var(--dp);margin-top:32px;margin-bottom:16px;font-weight:700">Ce que vous obtenez</h3>
+            <ul>
+              <li>Clarté sur vos atouts et votre positionnement</li>
+              <li>Identification de vos véritables motivations</li>
+              <li>Plan d'action réaliste adapté à votre situation</li>
+              <li>Accès à des ressources et des outils pour votre parcours</li>
+            </ul>
+
+            <p style="margin-top:32px;color:var(--tl);font-style:italic">Durée : 4 à 6 semaines | Format : En présentiel ou distanciel</p>
+
+            <a href="rendezvous.html" class="btn btn-pu">Réserver un créneau</a>
+          </div>
+        </div>
+
+        <!-- PRÉPARATION CANDIDATURES PANEL -->
+        <div class="content-panel" id="panel-preparation">
+          <div class="service-content">
+            <div class="sec-label"><span class="sec-label-line"></span>Préparation aux candidatures</div>
+            <h2>Décrochez le poste qui vous plaît</h2>
+            <p>Préparer une candidature, c'est bien plus que remplir un formulaire. C'est se mettre en avant, se positionner et créer une connexion avec le recruteur.</p>
+            
+            <h3 style="font-size:1.2rem;color:var(--dp);margin-top:32px;margin-bottom:16px;font-weight:700">Nos services</h3>
+            <ul>
+              <li><strong>Optimisation de CV</strong> — Structure, contenu, visibilité : votre CV fait la différence</li>
+              <li><strong>Lettre de motivation personnalisée</strong> — Racontez votre histoire de manière convaincante</li>
+              <li><strong>Préparation aux entretiens</strong> — Entraînement, simulation, gestion du stress et réponses stratégiques</li>
+              <li><strong>Stratégie de recherche</strong> — Comment chercher efficacement et créer un réseau qui vous aide</li>
+              <li><strong>LinkedIn optimisé</strong> — Profil professionnel attractif et visibilité accrue</li>
+            </ul>
+
+            <h3 style="font-size:1.2rem;color:var(--dp);margin-top:32px;margin-bottom:16px;font-weight:700">Résultats típiques</h3>
+            <ul>
+              <li>Augmentation du taux de réponse aux candidatures (+40% en moyenne)</li>
+              <li>Confiance renforcée en entretien</li>
+              <li>Réseau professionnel élargi</li>
+              <li>Insertion professionnelle en 2 à 4 mois</li>
+            </ul>
+
+            <p style="margin-top:32px;color:var(--tl);font-style:italic">Durée : 4 à 8 semaines | Format : Sessins individuelles + accompagnement asynchrone</p>
+
+            <a href="rendezvous.html" class="btn btn-pu">Réserver un créneau</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <a href="index.html#home" class="logo">
+          <div class="logo-mark"><img src="assets/Logo MySam.png" class="logo-img" alt="MySam"/></div>
+          <div><span class="logo-text">MySam</span><span class="logo-sub" style="color:rgba(255,255,255,.4)">Conseil &amp; Service</span></div>
+        </a>
+        <p>MySam accompagne entreprises, particuliers et publics fragilisés vers des solutions concrètes, humaines et durables. Parce que chaque parcours mérite une attention singulière.</p>
+        <div class="ft-social">
+          <a href="#" class="soc" aria-label="LinkedIn">in</a>
+          <a href="#" class="soc" aria-label="Twitter">𝕏</a>
+          <a href="#" class="soc" aria-label="Facebook">f</a>
+          <a href="#" class="soc" aria-label="Instagram">●</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#home">Accueil</a></li>
+          <li><a href="index.html#home">Solutions Entreprises</a></li>
+          <li><a href="index.html#particuliers">Accompagnement Particuliers</a></li>
+          <li><a href="index.html#zodiac">Programme Zodiac</a></li>
+          <li><a href="actualites.html">Actualités</a></li>
+          <li><a href="rendezvous.html">Prendre rendez-vous</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Ressources</h4>
+        <ul>
+          <li><a href="actualites.html">Blog &amp; Conseils</a></li>
+          <li><a href="actualites.html">Guides pratiques</a></li>
+          <li><a href="index.html#temoignages">Témoignages</a></li>
+          <li><a href="contact.html">FAQ</a></li>
+          <li><a href="connexion.html">Espace client</a></li>
+          <li><a href="index.html#zodiac">Nos partenaires</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Nous contacter</h4>
+        <div class="ft-contacts">
+          <div class="fci"><div class="fci-ico">📍</div><div><strong>Adresse</strong><span>Paris, France — présentiel &amp; distanciel</span></div></div>
+          <div class="fci"><div class="fci-ico">✉️</div><div><strong>Email</strong><span>contact@mysam-conseil.fr</span></div></div>
+          <div class="fci"><div class="fci-ico">📞</div><div><strong>Téléphone</strong><span>+33 (0)1 XX XX XX XX</span></div></div>
+          <div class="fci"><div class="fci-ico">🕐</div><div><strong>Disponibilité</strong><span>Lun–Ven, 9h–18h</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p>&copy; 2025 MySam Conseil &amp; Service. Tous droits réservés.</p>
+      <div class="ft-links">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-confidentialite.html">Politique de confidentialité</a>
+        <a href="cgu.html">CGU</a>
+        <a href="accessibilite.html">Accessibilité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+"use strict";
+
+/* Navbar scroll effect */
+(function(){
+  var nb = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){
+    nb.classList.toggle('s', window.scrollY > 20);
+  });
+})();
+
+/* Service card selector */
+(function(){
+  var cards = document.querySelectorAll('.service-card');
+  var panels = document.querySelectorAll('.content-panel');
+
+  cards.forEach(function(card){
+    card.addEventListener('click', function(){
+      var service = this.getAttribute('data-service');
+      
+      /* Update active card */
+      cards.forEach(function(c){ c.classList.remove('active'); });
+      this.classList.add('active');
+
+      /* Update active panel */
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('panel-' + service).classList.add('active');
+
+      /* Scroll to content */
+      setTimeout(function(){
+        document.querySelector('.content-wrapper').scrollIntoView({behavior:'smooth', block:'start'});
+      }, 50);
+    });
+  });
+})();
+</script>
+
+<!-- CV MAXIMISÉ APP INLINE - extracted from uploaded file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<script type="text/babel">
+const { useState, useRef } = React;
+
+/* ============================================================
+   RÉFÉRENTIEL FIGÉ — annotations du modèle
+   ============================================================ */
+const annotations = {
+  header: { title: "🎨 Design & Posture — En-tête", tips: [
+    "La photo n'est pas obligatoire, c'est un choix personnel.",
+    "Le titre de poste doit correspondre exactement à l'offre ciblée.",
+    "Le titre du poste recherché passe AVANT le nom, en plus gros.",
+    "Nom en taille moyenne, en dessous du titre de poste.",
+    "Couleur de fond d'en-tête : utilise ta couleur principale.",
+  ]},
+  contact: { title: "🔒 Design & Posture — Contact", tips: [
+    "Ne jamais mettre l'adresse complète (numéro + rue).",
+    "L'email doit être professionnel : prénom.nom@gmail.com.",
+    "Les icônes améliorent la lisibilité et aèrent visuellement.",
+    "LinkedIn : mets l'URL personnalisée (linkedin.com/in/ton-nom).",
+  ]},
+  profil: { title: "✍️ Design & Posture — Accroche", tips: [
+    "3 à 4 lignes maximum.",
+    "Structure : Qui tu es → Ce que tu apportes → Ce que tu cherches.",
+    "Pas de clichés : sois spécifique.",
+    "Personnalise l'accroche pour chaque offre.",
+  ]},
+  competences: { title: "📊 Design & Posture — Compétences & Langues", tips: [
+    "❌ INTERDIT : les barres de niveau.",
+    "✅ À la place : utilise des catégories textuelles claires.",
+    "Regroupe les compétences par thème.",
+    "Maximum 6–8 compétences clés.",
+  ]},
+  experiences: { title: "💼 Design & Posture — Expériences", tips: [
+    "Format : Titre du poste (gras) + Entreprise + Dates + Lieu.",
+    "Modèle C.A.R. : Challenge — Action — Résultat.",
+    "Chaque bullet commence par un verbe d'action fort.",
+    "Inclure au moins une réalisation chiffrée par poste.",
+  ]},
+  formation: { title: "🎓 Design & Posture — Formation", tips: [
+    "Même format visuel que les expériences.",
+    "Pour les alternants : mets le double intitulé.",
+    "Si tu as rédigé un mémoire, ajoute une ligne dédiée.",
+    "Mentionne 2–3 compétences clés acquises.",
+  ]},
+  interets: { title: "🎯 Design & Posture — Centres d'intérêt", tips: [
+    "2 à 3 entrées maximum.",
+    "Choisis des hobbies qui révèlent une facette de ta personnalité.",
+    "Contextualise : avec lieu/date/niveau.",
+  ]},
+};
+
+const TARGET_SHAPE = `{
+ "poste_recherche": "", "nom": "",
+ "contact": { "ville_cp": "", "email": "", "telephone": "", "linkedin": "" },
+ "accroche": "texte de 3 a 4 lignes",
+ "competences": [{ "categorie": "", "items": [] }],
+ "langues": [{ "langue": "", "niveau": "ex: Courant - C1" }],
+ "experiences": [{ "titre": "", "entreprise": "", "lieu": "", "dates": "", "bullets": [] }],
+ "formations": [{ "diplome": "", "ecole": "", "dates": "", "detail": "", "memoire": "", "mention": "" }],
+ "interets": [{ "icone": "emoji", "titre": "", "detail": "" }]
+}`;
+
+const SYSTEM_PROMPT = `Tu es un expert en optimisation de CV. Tu reçois les données brutes d'un candidat et tu produis une version optimisée.
+RÈGLES STRICTES :
+- Accroche : 3 à 4 lignes, structure qui es-tu / ce que tu apportes / ce que tu cherches. Aucun cliché.
+- Compétences : regroupées en 2-3 catégories thématiques, 6 à 8 au total.
+- Langues : niveau CECRL textuel (ex "Courant - C1"). JAMAIS de pourcentage ni de barre.
+- Expériences : ordre antéchronologique. Chaque bullet PRINCIPAL au format C.A.R. en une phrase.
+- INTERDICTION d'inventer un chiffre, une expérience, une compétence ou un diplôme.
+- Formations : antéchronologique, ligne mémoire si fournie, mention seulement si bonne.
+RÉPONDS UNIQUEMENT avec un objet JSON valide, sans markdown ni texte autour.`;
+
+async function callClaude(userContent) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 8000,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: userContent }],
+    }),
+  });
+  const d = await res.json();
+  return d.content[0].text;
+}
+
+function parseJSON(s) {
+  const clean = s.replace(/```json|```/g, "").trim();
+  return JSON.parse(clean);
+}
+
+function Landing({ go }) {
+  return (
+    <div style={{ minHeight:"100vh", background:"#07040F", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 20px", textAlign:"center", color:"#fff" }}>
+      <div style={{ maxWidth:"600px" }}>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"2.8rem", marginBottom:"16px", fontWeight:700 }}>Générez votre CV Maximisé</h2>
+        <p style={{ fontSize:"1.05rem", color:"rgba(255,255,255,.75)", marginBottom:"36px", lineHeight:1.75 }}>Transformez vos informations en un CV optimisé par l'IA, avec design professionnel et conseils en temps réel.</p>
+        <div style={{ display:"flex", gap:"16px", justifyContent:"center", flexWrap:"wrap" }}>
+          <button onClick={()=>go("import")} style={{ padding:"14px 32px", borderRadius:"50px", fontSize:".95rem", fontWeight:600, border:"none", cursor:"pointer", background:"#FF6B35", color:"#fff", transition:"all .25s" }}>📤 Importer un CV</button>
+          <button onClick={()=>go("manual")} style={{ padding:"14px 32px", borderRadius:"50px", fontSize:".95rem", fontWeight:600, border:"none", cursor:"pointer", background:"#5A2FA3", color:"#fff", transition:"all .25s" }}>✍️ Saisir manuellement</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ImportScreen({ go, run }) {
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const fileRef = useRef();
+
+  async function handleFile(f) {
+    if (!f) return;
+    setErr("");
+    setBusy(true);
+    try {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const arr = new Uint8Array(e.target.result);
+          const doc = await mammoth.extractRawText({ arrayBuffer: arr });
+          await run(doc.value);
+        } catch (ex) {
+          setErr("Erreur à la lecture du fichier. Réessaie.");
+          setBusy(false);
+        }
+      };
+      reader.readAsArrayBuffer(f);
+    } catch (ex) {
+      setErr("Erreur. Réessaie.");
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div style={{ minHeight:"100vh", background:"#0f172a", padding:"70px 20px 60px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+      <div style={{ maxWidth:"600px", background:"rgba(255,255,255,.06)", border:"2px dashed rgba(255,255,255,.2)", borderRadius:"16px", padding:"60px 40px", textAlign:"center", color:"#fff" }}>
+        <button onClick={()=>go("landing")} style={{ position:"absolute", top:"24px", left:"24px", background:"none", border:"none", color:"#fff", cursor:"pointer", fontSize:"1rem" }}>← Retour</button>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"1.8rem", marginBottom:"16px" }}>Importer votre CV</h2>
+        <p style={{ color:"rgba(255,255,255,.6)", marginBottom:"32px" }}>Déposez un fichier Word (.docx) ou cliquez pour en sélectionner un.</p>
+        <input ref={fileRef} type="file" accept=".docx,.doc" style={{ display:"none" }} onChange={(e)=>handleFile(e.target.files[0])} />
+        <button onClick={()=>fileRef.current?.click()} style={{ padding:"16px 32px", background:"#FF6B35", color:"#fff", border:"none", borderRadius:"10px", cursor:"pointer", fontSize:"1rem", fontWeight:600, marginBottom:"16px" }}>📁 Sélectionner un fichier</button>
+        {err && <div style={{ color:"#fca5a5", marginTop:"16px", fontSize:"0.9rem" }}>{err}</div>}
+        {busy && <div style={{ color:"rgba(255,255,255,.6)", marginTop:"16px" }}>⏳ Lecture du fichier...</div>}
+      </div>
+    </div>
+  );
+}
+
+function ManualScreen({ go, run }) {
+  const [f, setF] = useState({});
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const set = (k, v) => setF(prev => ({...prev, [k]: v}));
+
+  async function submit() {
+    setErr("");
+    setBusy(true);
+    const content = Object.entries(f).map(([k, v]) => `${k}: ${v}`).join("\n");
+    try {
+      await run(content);
+    } catch (e) {
+      setErr("Erreur API. Réessaie.");
+      setBusy(false);
+    }
+  }
+
+  const inputs = [
+    ["nom", "Nom complet", "Votre nom"],
+    ["poste_recherche", "Poste recherché", "Ex: Data Analyst"],
+    ["ville_cp", "Ville + code postal", "Paris 75001"],
+    ["email", "Email professionnel", "prenom.nom@gmail.com"],
+    ["telephone", "Téléphone", "+33 6 XX XX XX XX"],
+    ["linkedin", "LinkedIn URL", "linkedin.com/in/ton-nom"],
+  ];
+
+  const lab = { fontSize:".85rem", fontWeight:700, color:"#94a3b8", marginBottom:"6px", display:"block", textTransform:"uppercase", letterSpacing:".05em" };
+  const field = { width:"100%", padding:"12px", borderRadius:"8px", border:"1px solid rgba(255,255,255,.15)", background:"rgba(255,255,255,.05)", color:"#fff", fontFamily:"inherit", fontSize:".95rem", marginBottom:"20px" };
+
+  return (
+    <div style={{ minHeight:"100vh", background:"#0f172a", padding:"70px 20px 60px" }}>
+      <button onClick={()=>go("landing")} style={{ position:"absolute", top:"24px", left:"24px", background:"none", border:"none", color:"#fff", cursor:"pointer", fontSize:"1rem", marginBottom:"16px" }}>← Retour</button>
+      <div style={{ maxWidth:"640px", margin:"0 auto" }}>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", color:"#fff", fontSize:"2rem", marginBottom:"8px" }}>Saisis tes informations</h2>
+        <p style={{ color:"#94a3b8", marginBottom:"28px" }}>L'IA structure, reformule et complète ta mise en forme. Aucun chiffre inventé.</p>
+        {inputs.map(([k,l,ph])=>(
+          <div key={k}><label style={lab}>{l}</label>
+            <input style={field} placeholder={ph} value={f[k] || ""} onChange={e=>set(k,e.target.value)} /></div>
+        ))}
+        <label style={lab}>Accroche / À propos</label>
+        <textarea style={{ ...field, minHeight:"70px" }} placeholder="Qui es-tu, ce que tu apportes, ce que tu cherches" value={f.accroche || ""} onChange={e=>set("accroche",e.target.value)} />
+        <label style={lab}>Compétences (une par ligne)</label>
+        <textarea style={{ ...field, minHeight:"70px" }} placeholder="Sourcing&#10;ATS Workday&#10;Anglais courant…" value={f.competences || ""} onChange={e=>set("competences",e.target.value)} />
+        <label style={lab}>Langues (une par ligne)</label>
+        <textarea style={{ ...field, minHeight:"50px" }} placeholder="Anglais — Courant C1&#10;Espagnol — B1" value={f.langues || ""} onChange={e=>set("langues",e.target.value)} />
+        <label style={lab}>Expériences</label>
+        <textarea style={{ ...field, minHeight:"110px" }} placeholder="Poste, entreprise, lieu, dates, puis tes missions et résultats (avec chiffres si tu en as)." value={f.experiences || ""} onChange={e=>set("experiences",e.target.value)} />
+        <label style={lab}>Formations</label>
+        <textarea style={{ ...field, minHeight:"80px" }} placeholder="Diplôme, école, dates, mention, mémoire…" value={f.formations || ""} onChange={e=>set("formations",e.target.value)} />
+        <label style={lab}>Centres d'intérêt</label>
+        <textarea style={{ ...field, minHeight:"60px" }} placeholder="Avec contexte : lieu, niveau, date…" value={f.interets || ""} onChange={e=>set("interets",e.target.value)} />
+        {err && <div style={{ color:"#fca5a5", margin:"10px 0", fontSize:"14px" }}>{err}</div>}
+        <button onClick={submit} disabled={busy} style={{ width:"100%", padding:"14px", marginTop:"14px", background:"#FF6B35", color:"#fff", border:"none", borderRadius:"10px", fontWeight:700, fontSize:"1rem", cursor:"pointer", opacity:busy?0.6:1 }}>
+          {busy ? "L'IA optimise ton CV…" : "Générer mon CV maximisé"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ResultScreen({ data, report, go }) {
+  return (
+    <div style={{ minHeight:"100vh", background:"#f0f4f8", padding:"40px 20px" }}>
+      <button onClick={()=>go("landing")} style={{ marginBottom:"20px", padding:"10px 18px", background:"#fff", border:"1px solid #cbd5e1", borderRadius:"10px", fontWeight:600, cursor:"pointer", color:"#1A1030" }}>← Nouveau CV</button>
+      <button onClick={()=>window.print()} style={{ marginLeft:"10px", marginBottom:"20px", padding:"10px 18px", background:"#FF6B35", border:"none", borderRadius:"10px", fontWeight:600, cursor:"pointer", color:"#fff" }}>⬇ Télécharger en PDF</button>
+      <div style={{ maxWidth:"900px", margin:"0 auto", background:"#fff", borderRadius:"12px", padding:"40px", boxShadow:"0 4px 24px rgba(59,31,107,.1)" }}>
+        <div style={{ fontWeight:700, color:"#1A1030", marginBottom:"24px" }}>✅ CV généré et 100% éditable — Clique sur n'importe quel texte pour modifier.</div>
+        <CVRender d={data} />
+      </div>
+    </div>
+  );
+}
+
+function CVRender({ d }) {
+  return (
+    <div id="cv-export" style={{ background:"#fff", padding:"40px", maxWidth:"900px", margin:"0 auto", fontFamily:"'Inter',sans-serif" }}>
+      {/* En-tête */}
+      <div style={{ background:"linear-gradient(135deg,#3B1F6B 0%,#5A2FA3 100%)", color:"#fff", padding:"40px", borderRadius:"8px", marginBottom:"32px", textAlign:"center" }}>
+        <div style={{ fontSize:"2.2rem", fontWeight:800, marginBottom:"8px" }}>{d.poste_recherche || "Poste recherché"}</div>
+        <div style={{ fontSize:"1.6rem", fontWeight:700, marginBottom:"16px" }}>{d.nom || "Votre nom"}</div>
+        <div style={{ fontSize:".9rem", opacity:0.85 }}>{d.contact?.ville_cp} | {d.contact?.email} | {d.contact?.telephone}</div>
+        {d.contact?.linkedin && <div style={{ fontSize:".9rem", opacity:0.85 }}>{d.contact.linkedin}</div>}
+      </div>
+
+      {/* Accroche */}
+      {d.accroche && (
+        <div style={{ marginBottom:"32px" }}>
+          <h3 style={{ fontSize:"1.1rem", fontWeight:700, color:"#3B1F6B", marginBottom:"12px" }}>À propos</h3>
+          <p style={{ lineHeight:1.7, color:"#4A3870" }}>{d.accroche}</p>
+        </div>
+      )}
+
+      {/* Compétences */}
+      {d.competences?.length > 0 && (
+        <div style={{ marginBottom:"32px" }}>
+          <h3 style={{ fontSize:"1.1rem", fontWeight:700, color:"#3B1F6B", marginBottom:"12px" }}>Compétences</h3>
+          {d.competences.map((cat, i) => (
+            <div key={i} style={{ marginBottom:"12px" }}>
+              <strong style={{ color:"#5A2FA3" }}>{cat.categorie}</strong>
+              <div style={{ color:"#4A3870", fontSize:".95rem" }}>{cat.items?.join(", ") || ""}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Langues */}
+      {d.langues?.length > 0 && (
+        <div style={{ marginBottom:"32px" }}>
+          <h3 style={{ fontSize:"1.1rem", fontWeight:700, color:"#3B1F6B", marginBottom:"12px" }}>Langues</h3>
+          {d.langues.map((l, i) => (
+            <div key={i} style={{ color:"#4A3870", fontSize:".95rem", marginBottom:"6px" }}>{l.langue} — {l.niveau}</div>
+          ))}
+        </div>
+      )}
+
+      {/* Expériences */}
+      {d.experiences?.length > 0 && (
+        <div style={{ marginBottom:"32px" }}>
+          <h3 style={{ fontSize:"1.1rem", fontWeight:700, color:"#3B1F6B", marginBottom:"16px" }}>Expériences</h3>
+          {d.experiences.map((exp, i) => (
+            <div key={i} style={{ marginBottom:"20px" }}>
+              <div style={{ fontWeight:700, color:"#1A1030", marginBottom:"4px" }}>{exp.titre}</div>
+              <div style={{ color:"#5A2FA3", fontSize:".95rem", marginBottom:"4px" }}>{exp.entreprise} | {exp.lieu} | {exp.dates}</div>
+              <ul style={{ marginLeft:"20px", color:"#4A3870", lineHeight:1.7 }}>
+                {exp.bullets?.map((b, j) => <li key={j} style={{ marginBottom:"6px" }}>{b}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Formations */}
+      {d.formations?.length > 0 && (
+        <div style={{ marginBottom:"32px" }}>
+          <h3 style={{ fontSize:"1.1rem", fontWeight:700, color:"#3B1F6B", marginBottom:"16px" }}>Formations</h3>
+          {d.formations.map((form, i) => (
+            <div key={i} style={{ marginBottom:"16px" }}>
+              <div style={{ fontWeight:700, color:"#1A1030", marginBottom:"4px" }}>{form.diplome}</div>
+              <div style={{ color:"#5A2FA3", fontSize:".95rem", marginBottom:"4px" }}>{form.ecole} | {form.dates}</div>
+              {form.detail && <div style={{ color:"#4A3870", fontSize:".95rem" }}>{form.detail}</div>}
+              {form.memoire && <div style={{ color:"#4A3870", fontSize:".95rem", fontStyle:"italic" }}>Mémoire : {form.memoire}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Centres d'intérêt */}
+      {d.interets?.length > 0 && (
+        <div>
+          <h3 style={{ fontSize:"1.1rem", fontWeight:700, color:"#3B1F6B", marginBottom:"12px" }}>Centres d'intérêt</h3>
+          {d.interets.map((int, i) => (
+            <div key={i} style={{ marginBottom:"8px", color:"#4A3870", fontSize:".95rem" }}>
+              {int.icone} <strong>{int.titre}</strong> — {int.detail}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ErrorScreen({ msg, go }) {
+  return (
+    <div style={{ minHeight:"100vh", background:"#0f172a", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 20px", textAlign:"center", color:"#fff" }}>
+      <div style={{ fontSize:"3rem", marginBottom:"16px" }}>⚠️</div>
+      <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"2rem" }}>L'IA n'a pas pu finaliser le CV</h2>
+      <p style={{ color:"#94a3b8", maxWidth:"480px", lineHeight:1.6, marginBottom:"20px" }}>{msg}</p>
+      <button onClick={()=>go("landing")} style={{ padding:"14px 32px", background:"#FF6B35", color:"#fff", border:"none", borderRadius:"50px", fontWeight:600, cursor:"pointer" }}>Recommencer</button>
+    </div>
+  );
+}
+
+function App() {
+  const [screen, setScreen] = useState("landing");
+  const [result, setResult] = useState(null);
+  const [errMsg, setErrMsg] = useState("");
+
+  async function run(userContent) {
+    const raw = await callClaude(userContent);
+    let parsed;
+    try { parsed = parseJSON(raw); }
+    catch (e) { setErrMsg("La réponse n'a pas pu être lue correctement. Réessaie."); setScreen("error"); return; }
+    if (!parsed.data) { setErrMsg("Données incomplètes renvoyées par l'IA. Réessaie."); setScreen("error"); return; }
+    setResult({ data: parsed.data, report: parsed.report });
+    setScreen("result");
+  }
+
+  if (screen === "landing") return <Landing go={setScreen} />;
+  if (screen === "import") return <ImportScreen go={setScreen} run={run} />;
+  if (screen === "manual") return <ManualScreen go={setScreen} run={run} />;
+  if (screen === "result") return <ResultScreen data={result.data} report={result.report} go={setScreen} />;
+  if (screen === "error") return <ErrorScreen msg={errMsg} go={setScreen} />;
+  return null;
+}
+
+ReactDOM.createRoot(document.getElementById('cv-app')).render(<App />);
+</script>
+
+</body>
+</html>
