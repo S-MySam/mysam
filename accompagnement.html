@@ -223,11 +223,14 @@ async function callWorker(userContent){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,system:SYSTEM_PROMPT,messages:[{role:'user',content:userContent}]}),
   });
-  if(!res.ok)throw new Error('Erreur serveur ('+res.status+')');
+ if(!res.ok)throw new Error('Erreur serveur ('+res.status+')');
   const data=await res.json();
-  if(data.error)throw new Error(data.error.message||'Erreur API');
+  if(data.error)throw new Error(data.error||'Erreur API');
   if(!data.content||!data.content[0])throw new Error('Reponse vide');
-  return JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+  const txt=data.content[0].text;
+  const s=txt.indexOf('{'),e=txt.lastIndexOf('}');
+  if(s===-1||e===-1)throw new Error('JSON invalide');
+  return JSON.parse(txt.slice(s,e+1));
 }
 
 const dark={background:'linear-gradient(135deg,#3B1F6B 0%,#5A2FA3 100%)',borderRadius:'16px',color:'#fff',padding:'60px 24px',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'70vh',textAlign:'center'};
