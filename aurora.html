@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aurora &mdash; MySam Conseil</title>
+<meta name="description" content="Aurora, le programme MySam pour commerces locaux. R&eacute;v&eacute;lez la lumi&egrave;re de votre commerce local." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   RESET & ROOT
+============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dp:#4a1a6f;--lv:#9b7ba8;--or:#ff8c42;--oh:#ff7a2a;
+  --wh:#FFFFFF;--ow:#FAF9FF;
+  --td:#1A1030;--tm:#4A3870;--tl:#8270AA;
+  --bd:#E0D8F5;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--td);background:var(--wh);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+section{position:relative}
+ul{list-style:none}
+button{font-family:inherit}
+
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* fade-up reveal */
+.fu{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fu.on{opacity:1;transform:translateY(0)}
+.fu.d1{transition-delay:.1s}
+.fu.d2{transition-delay:.2s}
+
+/* ============================================================
+   NAVBAR
+============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bd);transition:box-shadow .3s
+}
+.nav.s{box-shadow:0 4px 32px rgba(74,26,111,.10)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-img{width:40px;height:40px;object-fit:contain;display:block}
+.logo-text{font-weight:700;font-size:1.2rem;color:var(--dp)}
+.logo-sub{font-size:.65rem;color:var(--tl);font-weight:400;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1}
+
+.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+.nav-links a{padding:8px 14px;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--tm);transition:all .2s}
+.nav-links a:hover{color:var(--dp);background:#F3EDFA}
+.nav-links a.active{color:var(--or);font-weight:700}
+
+.nav-acts{display:flex;align-items:center;gap:12px;flex-shrink:0}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:50px;font-size:.95rem;
+  font-weight:700;letter-spacing:.02em;cursor:pointer;
+  border:none;text-decoration:none;transition:all .25s ease;white-space:nowrap
+}
+.btn-or{background:var(--or);color:var(--wh)}
+.btn-or:hover{background:var(--oh);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,140,66,.4)}
+.btn-owh{background:transparent;color:var(--wh);border:2px solid var(--wh)}
+.btn-owh:hover{background:var(--wh);color:var(--dp);transform:translateY(-2px)}
+
+.hburg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;border:none;background:none}
+.hburg span{display:block;width:22px;height:2px;background:var(--dp);border-radius:2px;transition:all .3s}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero{
+  min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:clamp(2rem,10vw,4rem) 0;padding-top:calc(72px + clamp(2rem,10vw,4rem));
+  background:linear-gradient(135deg,#4a1a6f 0%,#ff8c42 100%);
+  overflow:hidden
+}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.14) 0%,transparent 60%)}
+.hero-in{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.hero-eye{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.3);border-radius:50px;
+  padding:6px 18px;font-size:.78rem;font-weight:700;color:var(--wh);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px
+}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,7vw,3.5rem);font-weight:800;color:var(--wh);line-height:1.1;margin-bottom:20px}
+.hero .subtitle{font-size:clamp(1.05rem,2.6vw,1.3rem);font-weight:400;color:rgba(255,255,255,.85);line-height:1.6;max-width:600px;margin:0 auto 40px}
+.hero .ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* ============================================================
+   STEPS
+============================================================ */
+.steps{padding:100px 0;background:var(--ow)}
+.steps-head{text-align:center;max-width:600px;margin:0 auto 56px}
+.steps-eye{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dp);margin-bottom:14px
+}
+.steps-eye::before{content:'';width:28px;height:2px;background:var(--or);border-radius:2px}
+.steps-head h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:var(--dp);line-height:1.2}
+
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px}
+.step-card{
+  background:var(--wh);border:2px solid var(--lv);border-radius:16px;padding:32px;
+  box-shadow:0 4px 20px rgba(74,26,111,.1);transition:all .3s ease;text-align:left
+}
+.step-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(74,26,111,.18);border-color:var(--or)}
+.step-num{
+  display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+  border-radius:50%;background:var(--dp);color:var(--wh);font-size:.85rem;font-weight:800;margin-bottom:16px
+}
+.step-icon{font-size:3rem;margin-bottom:12px;line-height:1}
+.step-card h3{font-size:1.3rem;font-weight:700;color:var(--dp);margin-bottom:12px}
+.step-card p{font-size:.95rem;font-weight:400;color:#666;line-height:1.6}
+
+/* ============================================================
+   WHY AURORA
+============================================================ */
+.why{padding:100px 0;background:var(--wh)}
+.why-in{max-width:700px;margin:0 auto;text-align:center}
+.why-eye{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dp);margin-bottom:14px
+}
+.why-eye::before{content:'';width:28px;height:2px;background:var(--or);border-radius:2px}
+.why h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:var(--dp);margin-bottom:36px}
+.why p{font-size:1rem;line-height:1.8;color:#333;margin-bottom:24px;text-align:left}
+.why p:last-child{margin-bottom:0}
+.why .accent{font-weight:700;color:var(--or)}
+
+/* ============================================================
+   CTA
+============================================================ */
+.cta{background:var(--dp);color:var(--wh);text-align:center;padding:80px 40px}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;margin-bottom:16px}
+.cta p{font-size:1.05rem;color:rgba(255,255,255,.8);max-width:480px;margin:0 auto 32px;line-height:1.6}
+.btn-cta{background:var(--or);color:var(--wh);padding:16px 40px;border-radius:50px;font-size:1.05rem;font-weight:700;cursor:pointer}
+.btn-cta:hover{background:var(--oh);transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,140,66,.4)}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer{background:var(--td);color:rgba(255,255,255,.75);padding:64px 0 32px}
+.ft-back{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;color:var(--wh);margin-bottom:32px;transition:color .2s}
+.ft-back:hover{color:var(--or)}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr;gap:48px;margin-bottom:48px}
+.ft-brand .logo{margin-bottom:16px}
+.ft-brand .logo-text{color:var(--wh)}
+.ft-brand > p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.55);max-width:320px}
+.ft-col h4{font-size:.88rem;font-weight:700;color:var(--wh);text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px}
+.ft-contacts{display:flex;flex-direction:column;gap:14px}
+.fci{display:flex;align-items:flex-start;gap:12px}
+.fci-ico{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.fci strong{display:block;font-size:.8rem;font-weight:600;color:var(--wh)}
+.fci span{font-size:.82rem;color:rgba(255,255,255,.5)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.08);padding-top:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.ft-bot p{font-size:.82rem;color:rgba(255,255,255,.35)}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hburg{display:flex}
+  .hero .ctas{flex-direction:column;align-items:stretch}
+  .hero .ctas .btn{width:100%;justify-content:center}
+  .cta{padding:56px 20px}
+  .btn-cta{width:100%;justify-content:center}
+  .ft-grid{grid-template-columns:1fr;gap:32px}
+  .why p{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav class="nav" id="navbar">
+  <div class="container">
+    <div class="nav-in">
+      <a href="index.html#home" class="logo">
+        <div class="logo-mark"><img src="assets/Logo MySam.png" alt="MySam" class="logo-img"/></div>
+        <div>
+          <span class="logo-text">MySam</span>
+          <span class="logo-sub">Conseil &amp; Service</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Accueil</a></li>
+        <li><a href="aurora.html" class="nav-link active" aria-current="page">Aurora</a></li>
+        <li><a href="actualites.html">Actualit&eacute;s</a></li>
+        <li><a href="rendezvous.html">Rendez-vous</a></li>
+        <li><a href="contact.html">Contactez-nous</a></li>
+      </ul>
+      <div class="nav-acts">
+        <a href="mailto:mysam.officiel@gmail.com?subject=Aurora%20-%20Demande%20de%20diagnostic" class="btn btn-or">Prendre rendez-vous</a>
+      </div>
+      <button class="hburg" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-in fu">
+      <div class="hero-eye">Programme Aurora</div>
+      <h1>Aurora &mdash; R&eacute;v&eacute;lez la lumi&egrave;re de votre commerce local</h1>
+      <p class="subtitle">Transformation de votre pr&eacute;sence physique pour attirer et vendre.</p>
+      <div class="ctas">
+        <a href="mailto:mysam.officiel@gmail.com?subject=Aurora%20-%20Demande%20de%20diagnostic" class="btn btn-or">Prendre rendez-vous</a>
+        <a href="#steps" class="btn btn-owh">Comment &ccedil;a marche&nbsp;?</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LES 3 &Eacute;TAPES
+============================================================ -->
+<section class="steps" id="steps">
+  <div class="container">
+    <div class="steps-head fu">
+      <div class="steps-eye">Notre m&eacute;thode</div>
+      <h2>Comment &ccedil;a marche&nbsp;?</h2>
+    </div>
+    <div class="steps-grid fu d1">
+      <article class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-icon" role="img" aria-label="Loupe">&#128269;</div>
+        <h3>Diagnostic sur site</h3>
+        <p>Analyse de votre emplacement, des flux, et de votre identit&eacute; visuelle actuelle.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-icon" role="img" aria-label="&Eacute;quipe">&#128101;</div>
+        <h3>Coaching en agencement</h3>
+        <p>Formation sur mesure pour vos &eacute;quipes, avec des conseils pratiques sur la signal&eacute;tique, la mise en sc&egrave;ne des produits, et l&rsquo;ambiance.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-icon" role="img" aria-label="Palette">&#127912;</div>
+        <h3>Cr&eacute;ation de supports visuels</h3>
+        <p>Affiches, signal&eacute;tique personnalis&eacute;e, et une strat&eacute;gie visuelle adapt&eacute;e &agrave; votre client&egrave;le locale.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     POURQUOI AURORA
+============================================================ -->
+<section class="why">
+  <div class="container">
+    <div class="why-in fu">
+      <div class="why-eye">Notre conviction</div>
+      <h2>Pourquoi Aurora&nbsp;?</h2>
+      <p>Votre commerce est invisible&nbsp;? Pas assez attractif&nbsp;? Aurora transforme votre espace en un atout commercial.</p>
+      <p>Nous ne vendons pas de services, nous r&eacute;v&eacute;lons votre potentiel.</p>
+      <p>De nombreux commer&ccedil;ants ne savent pas comment optimiser leur pr&eacute;sence physique. C&rsquo;est notre sp&eacute;cialit&eacute;.</p>
+      <p>Avec Aurora, votre boutique devient un lieu d&rsquo;exp&eacute;rience o&ugrave; les clients reviennent.</p>
+      <p><span class="accent">Plus qu&rsquo;une mise en avant, c&rsquo;est une renaissance de votre visibilit&eacute;.</span> Vous m&eacute;ritez mieux que l&rsquo;invisibilit&eacute;.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+============================================================ -->
+<section class="cta fu">
+  <h2>Rejoignez Aurora</h2>
+  <p>Prenez rendez-vous pour un diagnostic gratuit de votre pr&eacute;sence physique.</p>
+  <a href="mailto:mysam.officiel@gmail.com?subject=Aurora%20-%20Demande%20de%20diagnostic" class="btn btn-cta">Prendre rendez-vous &rarr;</a>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="container">
+    <a href="index.html#home" class="ft-back">&larr; Retour &agrave; l&rsquo;accueil</a>
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <a href="index.html#home" class="logo">
+          <div class="logo-mark"><img src="assets/Logo MySam.png" class="logo-img" alt="MySam"/></div>
+          <div><span class="logo-text">MySam</span><span class="logo-sub" style="color:rgba(255,255,255,.4)">Conseil &amp; Service</span></div>
+        </a>
+        <p>MySam accompagne entreprises, particuliers, publics fragilis&eacute;s et commerces locaux vers des solutions concr&egrave;tes, humaines et durables.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Nous contacter</h4>
+        <div class="ft-contacts">
+          <div class="fci"><div class="fci-ico">&#9993;&#65039;</div><div><strong>Email</strong><span>mysam.officiel@gmail.com</span></div></div>
+          <div class="fci"><div class="fci-ico">&#128205;</div><div><strong>Adresse</strong><span>Paris, France &mdash; pr&eacute;sentiel &amp; distanciel</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p>&copy; 2026 MySam Conseil &amp; Service. Tous droits r&eacute;serv&eacute;s.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+(function(){
+  var nb = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){
+    nb.classList.toggle('s', window.scrollY > 20);
+  });
+  var hb = document.querySelector('.hburg');
+  var links = document.querySelector('.nav-links');
+  if(hb) hb.addEventListener('click', function(){
+    var open = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', open ? 'false' : 'true');
+    links.style.display = open ? '' : 'flex';
+    if(!open){
+      links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#fff;padding:16px 32px;border-bottom:1px solid var(--bd);gap:4px';
+    }
+  });
+})();
+
+(function(){
+  var els = document.querySelectorAll('.fu');
+  if(!window.IntersectionObserver){ els.forEach(function(e){e.classList.add('on');}); return; }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); }
+    });
+  },{threshold:0.10});
+  els.forEach(function(e){ obs.observe(e); });
+})();
+</script>
+</body>
+</html>
