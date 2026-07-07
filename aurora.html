@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora — MySam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dp: #4a1a6f;
+            --lv: #9b7ba8;
+            --or: #ff8c42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dp);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--or);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dp) 0%, var(--or) 100%);
+            color: white;
+            padding: clamp(3rem, 10vw, 6rem) 2rem;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: 400;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Steps Section */
+        .steps {
+            padding: clamp(3rem, 8vw, 5rem) 2rem;
+            background: #f9f7fc;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--dp);
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: white;
+            border: 2px solid var(--lv);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(74, 26, 111, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(74, 26, 111, 0.2);
+        }
+
+        .step-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            color: var(--dp);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .step-card p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Why Aurora Section */
+        .why-aurora {
+            padding: clamp(3rem, 8vw, 5rem) 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .why-aurora p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .why-aurora strong {
+            color: var(--or);
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--dp);
+            color: white;
+            padding: clamp(3rem, 8vw, 5rem) 2rem;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background: var(--or);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn-cta:hover {
+            background: #ff7a2a;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .btn-cta {
+                width: 100%;
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #2d1b47;
+            color: rgba(255,255,255,0.8);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        footer a {
+            color: var(--or);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-logo">MySam</a>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Accueil</a></li>
+            <li><a href="aurora.html" class="nav-link active">Aurora</a></li>
+            <li><a href="index.html#services" class="nav-link">Services</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Aurora</h1>
+            <p class="hero-subtitle">Révélez la lumière de votre commerce local</p>
+            <p style="font-size: clamp(1rem, 3vw, 1.1rem); color: rgba(255,255,255,0.85); margin-top: 1.5rem; max-width: 600px;">
+                Transformation de votre présence physique pour attirer et vendre
+            </p>
+        </section>
+
+        <!-- 3 Steps Section -->
+        <section class="steps">
+            <h2 class="section-title">Comment ça marche?</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">🔍</div>
+                    <h3>Diagnostic sur site</h3>
+                    <p>Analyse de votre emplacement, des flux, et de votre identité visuelle actuelle.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">👥</div>
+                    <h3>Coaching en agencement</h3>
+                    <p>Formation sur mesure pour vos équipes, avec des conseils pratiques sur la signalétique, la mise en scène des produits, et l'ambiance.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🎨</div>
+                    <h3>Création de supports visuels</h3>
+                    <p>Affiches, signalétique personnalisée, et une stratégie visuelle adaptée à votre clientèle locale.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Aurora Section -->
+        <section class="why-aurora">
+            <h2 class="section-title">Pourquoi Aurora?</h2>
+            <p>Votre commerce est invisible? Pas assez attractif? Aurora transforme votre espace en un atout commercial puissant et durable.</p>
+            <p>Nous ne vendons pas de services, nous révélons votre potentiel. De nombreux commerçants ne savent pas comment optimiser leur présence physique. C'est notre spécialité.</p>
+            <p><strong>Plus qu'une mise en avant, c'est une renaissance de votre visibilité.</strong></p>
+            <p>Avec Aurora, votre boutique devient un lieu d'expérience où les clients reviennent. Vous méritez mieux que l'invisibilité.</p>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <h2>Rejoignez Aurora</h2>
+            <p>Prenez rendez-vous pour un diagnostic gratuit de votre présence physique.</p>
+            <a href="mailto:mysam.officiel@gmail.com?subject=Aurora%20-%20Demande%20de%20diagnostic" class="btn-cta">
+                Prendre rendez-vous →
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 MySam Conseil & Service. Tous droits réservés.</p>
+        <p><a href="index.html">← Retour à l'accueil</a></p>
+        <p>Contact: <a href="mailto:mysam.officiel@gmail.com">mysam.officiel@gmail.com</a> | <a href="tel:+33669255304">06 69 25 53 04</a></p>
+    </footer>
+</body>
+</html>

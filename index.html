@@ -198,6 +198,25 @@ ul{list-style:none}
 .z-quote blockquote{font-family:'Playfair Display',serif;font-size:1rem;line-height:1.5;margin-bottom:10px;font-style:italic}
 .z-quote-auth{font-size:.78rem;color:rgba(255,255,255,.6)}
 
+/* AURORA SECTION */
+.aurora{padding:120px 0;background:linear-gradient(135deg,rgba(255,107,53,.08) 0%,rgba(255,107,53,.02) 100%);border-top:2px solid rgba(255,107,53,.2);border-bottom:2px solid rgba(255,107,53,.2)}
+.aurora-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.aurora-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.4);border-radius:50px;padding:6px 16px;font-size:.75rem;font-weight:700;color:#FF9A5C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.aurora h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;color:var(--dp);line-height:1.2;margin-bottom:12px}
+.aurora h2 .acc{color:var(--or)}
+.aurora-sub{font-size:1.05rem;font-weight:600;color:var(--or);margin-bottom:20px}
+.aurora p{font-size:1rem;line-height:1.75;color:var(--tm);margin-bottom:24px}
+.aurora-features{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.aurora-feat{display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:14px;background:var(--wh);border:1px solid rgba(255,107,53,.2);transition:all .25s}
+.aurora-feat:hover{background:rgba(255,107,53,.06);border-color:var(--or);box-shadow:0 4px 16px rgba(255,107,53,.12)}
+.aurora-feat-ico{width:34px;height:34px;border-radius:10px;flex-shrink:0;background:rgba(255,107,53,.15);display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--or)}
+.aurora-feat strong{display:block;font-size:.88rem;font-weight:600;color:var(--dp);margin-bottom:2px}
+.aurora-feat span{font-size:.78rem;color:var(--tl)}
+.aurora-img{border-radius:28px;overflow:hidden;box-shadow:0 32px 80px rgba(255,107,53,.15);position:relative}
+.aurora-img img{width:100%;height:500px;object-fit:cover}
+.aurora-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;font-size:.95rem;font-weight:600;background:var(--or);color:var(--wh);cursor:pointer;border:none;transition:all .25s;text-decoration:none}
+.aurora-btn:hover{background:var(--oh);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,53,.35)}
+
 /* PARTNER LOGOS */
 .z-ptns{margin-top:20px}
 .z-ptns-lbl{font-size:.72rem;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
@@ -324,7 +343,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
 
 /* RESPONSIVE */
 @media(max-width:1024px){
-  .intro-grid,.hero-grid,.b2c-grid,.zodiac-grid{grid-template-columns:1fr;gap:48px}
+  .intro-grid,.hero-grid,.b2c-grid,.zodiac-grid,.aurora-grid{grid-template-columns:1fr;gap:48px}
   .mq-stage{height:360px}
   .plans{grid-template-columns:1fr;max-width:380px;margin:0 auto}
   .plan.pop{transform:none}.plan.pop:hover{transform:translateY(-4px)}
@@ -551,6 +570,29 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
   </div>
 </section>
 
+<!-- AURORA -->
+<section class="aurora" id="aurora">
+  <div class="container">
+    <div class="aurora-grid">
+      <div class="fu">
+        <div class="aurora-badge">Nouveau programme</div>
+        <h2>Aurora <span class="acc">✨</span></h2>
+        <p class="aurora-sub">R&eacute;v&eacute;lez la lumi&egrave;re de votre commerce local</p>
+        <p>Aurora est un programme d&rsquo;accompagnement exclusif d&eacute;di&eacute; aux petits commerces en c&oelig;ur de ville. Nous aidons les entrepreneurs &agrave; transformer leur pr&eacute;sence physique pour attirer les regards et faire d&eacute;coller les ventes.</p>
+        <div class="aurora-features">
+          <div class="aurora-feat"><div class="aurora-feat-ico">🔍</div><div><strong>Diagnostic sur site</strong><span>Analyse de votre emplacement, des flux et de votre identit&eacute; visuelle</span></div></div>
+          <div class="aurora-feat"><div class="aurora-feat-ico">👥</div><div><strong>Coaching en agencement</strong><span>Formation sur mesure pour vos &eacute;quipes sur la signalétique et l&rsquo;ambiance</span></div></div>
+          <div class="aurora-feat"><div class="aurora-feat-ico">🎨</div><div><strong>Cr&eacute;ation de supports visuels</strong><span>Affches, signalétique personnalis&eacute;e et strat&eacute;gie visuelle adapt&eacute;e</span></div></div>
+        </div>
+        <a href="aurora.html" class="aurora-btn">D&eacute;couvrir Aurora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+      <div class="aurora-img fu d2">
+        <img src="https://images.unsplash.com/photo-1556740757-46cdc9dcfb83?w=900&q=80" alt="Commerce local beaut&eacute;fully design&eacute;" />
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TRUST BAR -->
 <section class="trust">
   <div class="container">
@@ -561,7 +603,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
       </div>
       <div class="trust-nums">
         <div class="tn"><div class="tn-n">50+</div><div class="tn-l">Accompagn&eacute;s</div></div>
-        <div class="tn"><div class="tn-n">3</div><div class="tn-l">Programmes</div></div>
+        <div class="tn"><div class="tn-n">4</div><div class="tn-l">Programmes</div></div>
         <div class="tn"><div class="tn-n">10+</div><div class="tn-l">Partenaires</div></div>
         <div class="tn"><div class="tn-n">98%</div><div class="tn-l">Satisfaction</div></div>
       </div>
@@ -723,6 +765,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
           <li><a href="index.html#home">Solutions Entreprises</a></li>
           <li><a href="accompagnement.html">Accompagnement Particuliers</a></li>
           <li><a href="index.html#zodiac">Programme Zodiac</a></li>
+          <li><a href="aurora.html">Aurora</a></li>
           <li><a href="actualites.html">Actualit&eacute;s</a></li>
         </ul>
       </div>
@@ -859,7 +902,6 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
     var track=document.getElementById('rv-track');
     if(!track||track.children.length===0)return;
     if(animFrame)cancelAnimationFrame(animFrame);
-    // Double le contenu pour boucle infinie
     var orig=track.innerHTML;
     track.innerHTML=orig+orig;
     var halfH=track.scrollHeight/2;
@@ -887,7 +929,6 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
     if(rv.length>2)setTimeout(startMarquee,500);
   }
 
-  // Stars
   document.querySelectorAll('.star-btn').forEach(function(btn){
     btn.addEventListener('click',function(){
       rating=parseInt(this.dataset.v);
@@ -927,7 +968,6 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
 
 // ===== CLARK CHATBOT IA =====
 (function(){
-  // ⚠️ Même URL que le CV tool — à configurer après Cloudflare
   var WORKER_URL='https://mysam.samuel-mauviard.workers.dev';
   var useAI=(WORKER_URL.indexOf('TON-WORKER')===-1);
 
@@ -939,17 +979,18 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
   var history=[];
   var started=false;
 
-  var CLARK_SYSTEM='Tu es Clark, le guide sympathique de MySam. Tu aides les visiteurs \u00e0 trouver le bon service. MySam propose : 1) G\u00e9n\u00e9rateur CV IA (page accompagnement.html), 2) Bilan de comp\u00e9tences (RDV en ligne), 3) Pr\u00e9paration aux candidatures (RDV), 4) Solutions RH pour entreprises (contact), 5) Programme Zodiac pour personnes tr\u00e8s \u00e9loign\u00e9es de l\'emploi. Sois chaleureux, bref (2-3 phrases max par r\u00e9ponse), et propose toujours une action concr\u00e8te avec un lien ou une suggestion.';
+  var CLARK_SYSTEM='Tu es Clark, le guide sympathique de MySam. Tu aides les visiteurs \u00e0 trouver le bon service. MySam propose : 1) G\u00e9n\u00e9rateur CV IA (page accompagnement.html), 2) Bilan de comp\u00e9tences (RDV en ligne), 3) Pr\u00e9paration aux candidatures (RDV), 4) Solutions RH pour entreprises (contact), 5) Programme Zodiac pour personnes tr\u00e8s \u00e9loign\u00e9es de l\'emploi, 6) Aurora pour petits commerces. Sois chaleureux, bref (2-3 phrases max par r\u00e9ponse), et propose toujours une action concr\u00e8te avec un lien ou une suggestion.';
 
-  // Fallback decision tree
   var flows={
-    start:{msg:'Salut\u00a0! Je suis Clark, le guide MySam\u00a0\ud83d\udd77\ufe0f\nQu\'est-ce qui t\'am\u00e8ne\u00a0?',options:[{txt:'Je cherche un emploi',next:'emploi'},{txt:'Je veux am\u00e9liorer mon profil',next:'profil'},{txt:'Mon entreprise a besoin d\'aide',next:'entreprise'},{txt:'Je suis loin de l\'emploi',next:'zodiac'}]},
+    start:{msg:'Salut\u00a0! Je suis Clark, le guide MySam\u00a0\ud83d\udd77\ufe0f\nQu\'est-ce qui t\'am\u00e8ne\u00a0?',options:[{txt:'Je cherche un emploi',next:'emploi'},{txt:'Je veux am\u00e9liorer mon profil',next:'profil'},{txt:'Mon entreprise a besoin d\'aide',next:'entreprise'},{txt:'Mon commerce a besoin de visibilit\u00e9',next:'aurora'},{txt:'Je suis loin de l\'emploi',next:'zodiac'}]},
     emploi:{msg:'Super\u00a0! Commençons par ton CV.\nTu as un CV \u00e0 optimiser\u00a0?',options:[{txt:'Oui, je veux l\'optimiser avec l\'IA',next:'_cv'},{txt:'Non, je pars de z\u00e9ro',next:'_cv'},{txt:'Je veux me pr\u00e9parer aux entretiens',next:'_rdv'}]},
     profil:{msg:'Bonne d\u00e9cision\u00a0!\nPar o\u00f9 tu veux commencer\u00a0?',options:[{txt:'G\u00e9n\u00e9rer mon CV avec l\'IA',next:'_cv'},{txt:'Faire un bilan de comp\u00e9tences',next:'_rdv'},{txt:'Pr\u00e9parer mes candidatures',next:'_rdv'}]},
     entreprise:{msg:'MySam accompagne aussi les entreprises\u00a0\ud83c\udfe2\nContacte-nous pour un devis personnalis\u00e9\u00a0!',options:[{txt:'Aller sur la page contact',next:'_contact'},{txt:'Retour au d\u00e9but',next:'start'}]},
+    aurora:{msg:'Aurora est parfait pour votre commerce\u00a0\ud83c\udf1f\nTransformez votre pr\u00e9sence physique !',options:[{txt:'D\u00e9couvrir Aurora',next:'_aurora'},{txt:'Nous contacter',next:'_contact'}]},
     zodiac:{msg:'Le Programme Zodiac est fait pour toi\u00a0\ud83c\udf1f\nNous travaillons avec Mission Locale, CAP Emploi, CCAS...',options:[{txt:'En savoir plus sur Zodiac',next:'_zodiac'},{txt:'Nous contacter directement',next:'_contact'}]},
     '_cv':{msg:'\u00c0 tout de suite\u00a0! Clique ci-dessous pour acc\u00e9der \u00e0 l\'outil CV\u00a0:',options:[{txt:'\ud83d\udcc4 Aller sur le g\u00e9n\u00e9rateur CV',next:'__acc'},{txt:'Autre question',next:'start'}]},
     '_rdv':{msg:'Prends rendez-vous en ligne, c\'est rapide et gratuit\u00a0!',options:[{txt:'\ud83d\udcc5 Prendre rendez-vous',next:'__rdv'},{txt:'Autre question',next:'start'}]},
+    '_aurora':{msg:'Allez d\u00e9couvrir la page Aurora d\u00e8s maintenant\u00a0!',options:[{txt:'\ud83c\udf1f Acc\u00e9der \u00e0 Aurora',next:'__aurora'},{txt:'Autre question',next:'start'}]},
     '_contact':{msg:'Tu peux nous \u00e9crire \u00e0 mysam.officiel@gmail.com\nou appeler le 06\u00a069\u00a025\u00a053\u00a004.',options:[{txt:'\u2709\ufe0f Page contact',next:'__contact'},{txt:'Retour',next:'start'}]},
     '_zodiac':{msg:'Le programme Zodiac est d\u00e9crit sur la page d\'accueil, section Zodiac.\nNous contacter\u00a0: 06\u00a069\u00a025\u00a053\u00a004',options:[{txt:'Nous contacter',next:'__contact'},{txt:'Retour',next:'start'}]}
   };
@@ -974,6 +1015,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
         optsEl.innerHTML='';
         if(o.next==='__acc'){window.location.href='accompagnement.html';}
         else if(o.next==='__rdv'){window.location.href='rendezvous.html';}
+        else if(o.next==='__aurora'){window.location.href='aurora.html';}
         else if(o.next==='__contact'){window.location.href='contact.html';}
         else if(o.next==='__zodiac'){document.getElementById('zodiac').scrollIntoView({behavior:'smooth'});modal.classList.remove('open');}
         else{showFlow(o.next);}
