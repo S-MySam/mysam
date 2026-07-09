@@ -18,6 +18,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: #f5f5f5;
@@ -69,8 +73,13 @@
             margin: 0 auto;
         }
 
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
         .page-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--dp);
             margin-bottom: 1rem;
             font-weight: 700;
@@ -80,6 +89,71 @@
             color: #666;
             margin-bottom: 2rem;
             font-size: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tabs/Steps Navigation */
+        .steps-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .step-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--lv);
+            background: white;
+            color: var(--dp);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .step-btn:hover {
+            border-color: var(--or);
+            color: var(--or);
+        }
+
+        .step-btn.active {
+            background: var(--dp);
+            color: white;
+            border-color: var(--dp);
+        }
+
+        /* Step Content */
+        .step-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Section Styles */
+        .section-box {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dp);
+            margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         /* CV Generator Toolbar */
@@ -145,57 +219,33 @@
         .swatch-gray { background: linear-gradient(135deg, #3a3a3a 0%, #555 100%); }
         .swatch-orange { background: linear-gradient(135deg, #d97706 0%, #ff8c42 100%); }
 
-        /* Toggles */
-        .toggle-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 28px;
-            background: #ccc;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .toggle-switch.active {
-            background: var(--or);
-        }
-
-        .toggle-slider {
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 12px;
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.active .toggle-slider {
-            left: 24px;
-        }
-
-        /* Export Button */
-        .export-btn {
-            background: var(--dp);
-            color: white;
-            border: none;
+        /* Buttons */
+        .btn {
             padding: 0.8rem 1.5rem;
+            border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             font-size: 0.95rem;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
-        .export-btn:hover {
+        .btn-primary {
+            background: var(--dp);
+            color: white;
+        }
+
+        .btn-primary:hover {
             background: #3a1351;
+        }
+
+        .btn-secondary {
+            background: var(--or);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #ff7a2a;
         }
 
         /* CV Preview */
@@ -246,6 +296,7 @@
             color: #999;
             overflow: hidden;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         .cv-photo img {
@@ -346,6 +397,80 @@
             background: #f0f0f0;
         }
 
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dp);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--lv);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--or);
+            box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Results */
+        .result-box {
+            background: #f0f0f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--or);
+        }
+
+        .result-title {
+            font-weight: 700;
+            color: var(--dp);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-content {
+            color: #666;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--or);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .a4-page {
@@ -355,22 +480,17 @@
                 margin-bottom: 1rem;
             }
 
+            .steps-nav {
+                flex-direction: column;
+            }
+
+            .step-btn {
+                width: 100%;
+            }
+
             .nav-menu {
                 gap: 1rem;
                 font-size: 0.9rem;
-            }
-
-            .cv-toolbar {
-                padding: 1rem;
-            }
-
-            .color-swatches {
-                gap: 0.6rem;
-            }
-
-            .color-swatch {
-                width: 40px;
-                height: 40px;
             }
         }
     </style>
@@ -387,96 +507,200 @@
     </nav>
 
     <main>
-        <h1 class="page-title">Générateur de CV Optimisé</h1>
-        <p class="page-desc">Créez un CV moderne, éditable et optimisé en une page A4. Cliquez sur n'importe quel champ pour éditer.</p>
+        <div class="page-header">
+            <h1 class="page-title">Accompagnement Particuliers</h1>
+            <p class="page-desc">Bilan de compétences, CV optimisé par IA, analyse d'emploi — tous les outils pour réussir votre parcours professionnel.</p>
+        </div>
 
-        <!-- Toolbar -->
-        <div class="cv-toolbar">
-            <div class="toolbar-section">
-                <label class="toolbar-label">Palette de couleurs</label>
-                <div class="color-swatches">
-                    <div class="color-swatch swatch-violet active" data-color="Violet" title="Violet"></div>
-                    <div class="color-swatch swatch-blue" data-color="Blue" title="Bleu nuit"></div>
-                    <div class="color-swatch swatch-green" data-color="Green" title="Vert forêt"></div>
-                    <div class="color-swatch swatch-red" data-color="Red" title="Bordeaux"></div>
-                    <div class="color-swatch swatch-gray" data-color="Gray" title="Anthracite"></div>
-                    <div class="color-swatch swatch-orange" data-color="Orange" title="Terracotta"></div>
-                </div>
-            </div>
+        <!-- Step Navigation -->
+        <div class="steps-nav">
+            <button class="step-btn active" onclick="switchStep('cv')">📝 Générateur CV</button>
+            <button class="step-btn" onclick="switchStep('analyse')">🤖 Analyse CV (IA)</button>
+            <button class="step-btn" onclick="switchStep('bilan')">📊 Bilan Compétences</button>
+            <button class="step-btn" onclick="switchStep('avis')">💬 Commentaires</button>
+        </div>
 
-            <div class="toolbar-section">
-                <label class="toolbar-label">Sections</label>
-                <div class="toggle-group">
-                    <span>Centres d'intérêt:</span>
-                    <div class="toggle-switch active" id="loisirs-toggle">
-                        <div class="toggle-slider"></div>
+        <!-- STEP 1: CV GENERATOR -->
+        <div id="cv" class="step-content active">
+            <div class="section-box">
+                <h2 class="section-title">Générateur de CV Optimisé</h2>
+                <p style="color: #666; margin-bottom: 1.5rem;">Créez un CV moderne, éditable et optimisé en une page A4. Cliquez sur n'importe quel champ pour éditer.</p>
+
+                <!-- Toolbar -->
+                <div class="cv-toolbar">
+                    <div class="toolbar-section">
+                        <label class="toolbar-label">Palette de couleurs</label>
+                        <div class="color-swatches">
+                            <div class="color-swatch swatch-violet active" data-color="Violet" title="Violet"></div>
+                            <div class="color-swatch swatch-blue" data-color="Blue" title="Bleu nuit"></div>
+                            <div class="color-swatch swatch-green" data-color="Green" title="Vert forêt"></div>
+                            <div class="color-swatch swatch-red" data-color="Red" title="Bordeaux"></div>
+                            <div class="color-swatch swatch-gray" data-color="Gray" title="Anthracite"></div>
+                            <div class="color-swatch swatch-orange" data-color="Orange" title="Terracotta"></div>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-section">
+                        <label class="toolbar-label">Sections</label>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <span>Centres d'intérêt:</span>
+                            <div class="color-swatch active" id="loisirs-toggle" style="width: 50px; height: 28px; border-radius: 14px; background: var(--or);"></div>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-section">
+                        <button class="btn btn-secondary" onclick="exportPDF()">📥 Télécharger PDF</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="toolbar-section">
-                <button class="export-btn" onclick="exportPDF()">📥 Télécharger PDF</button>
+                <!-- CV Preview -->
+                <div class="cv-container">
+                    <div class="a4-page" id="cvPage">
+                        <input type="file" id="photoUpload" class="cv-photo-upload" accept="image/*">
+                        
+                        <div class="cv-header">
+                            <div class="cv-photo" onclick="document.getElementById('photoUpload').click()" title="Cliquez pour ajouter une photo">
+                                Photo
+                            </div>
+                            <div class="cv-header-text">
+                                <h1 contenteditable="true" data-field="name">Prénom NOM</h1>
+                                <p contenteditable="true" data-field="poste">Titre du poste</p>
+                                <p contenteditable="true" data-field="contact">Email • Téléphone • Localisation</p>
+                            </div>
+                        </div>
+
+                        <div class="cv-section">
+                            <h2>Accroche</h2>
+                            <p contenteditable="true" data-field="accroche" style="font-size: 9.5pt;">Décrivez votre profil professionnel en 2-3 lignes.</p>
+                        </div>
+
+                        <div class="cv-section">
+                            <h2>Compétences</h2>
+                            <p contenteditable="true" data-field="competences" style="font-size: 9.5pt;">Compétence 1 • Compétence 2 • Compétence 3 • Compétence 4</p>
+                        </div>
+
+                        <div class="cv-section">
+                            <h2>Langues</h2>
+                            <p contenteditable="true" data-field="langues" style="font-size: 9.5pt;">Français (natif) • Anglais (courant)</p>
+                        </div>
+
+                        <div class="cv-section">
+                            <h2>Expériences</h2>
+                            <div class="cv-entry">
+                                <div class="cv-entry-title" contenteditable="true" data-field="exp1-title">Titre du poste</div>
+                                <div class="cv-entry-meta" contenteditable="true" data-field="exp1-meta">Entreprise • Localisation • Dates</div>
+                                <div class="cv-bullet" contenteditable="true" data-field="exp1-bullet1">• Responsabilité clé 1</div>
+                                <div class="cv-bullet" contenteditable="true" data-field="exp1-bullet2">• Responsabilité clé 2</div>
+                            </div>
+                        </div>
+
+                        <div class="cv-section">
+                            <h2>Formations</h2>
+                            <div class="cv-entry">
+                                <div class="cv-entry-title" contenteditable="true" data-field="form1-title">Diplôme obtenu</div>
+                                <div class="cv-entry-meta" contenteditable="true" data-field="form1-meta">Établissement • Année</div>
+                            </div>
+                        </div>
+
+                        <div class="cv-section" id="loisirs-section">
+                            <h2>Centres d'intérêt</h2>
+                            <p contenteditable="true" data-field="loisirs" style="font-size: 9.5pt;">Loisir 1 • Loisir 2 • Loisir 3</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- CV Preview -->
-        <div class="cv-container">
-            <div class="a4-page" id="cvPage">
-                <input type="file" id="photoUpload" class="cv-photo-upload" accept="image/*">
-                
-                <div class="cv-header">
-                    <div class="cv-photo" onclick="document.getElementById('photoUpload').click()" title="Cliquez pour ajouter une photo">
-                        Photo
+        <!-- STEP 2: ANALYSE CV PAR IA -->
+        <div id="analyse" class="step-content">
+            <div class="section-box">
+                <h2 class="section-title">Analyse de CV par IA (Groq)</h2>
+                <p style="color: #666; margin-bottom: 1.5rem;">Collez votre CV ou du texte professionnelle pour une analyse détaillée par IA.</p>
+
+                <div class="form-group">
+                    <label>Votre CV ou texte professionnel</label>
+                    <textarea id="analyzeInput" placeholder="Collez votre CV, lettre de motivation ou description professionnelle..."></textarea>
+                </div>
+
+                <button class="btn btn-secondary" onclick="analyzeCV()">🤖 Analyser avec IA</button>
+                <div id="analyzeResult"></div>
+            </div>
+        </div>
+
+        <!-- STEP 3: BILAN DE COMPÉTENCES -->
+        <div id="bilan" class="step-content">
+            <div class="section-box">
+                <h2 class="section-title">Bilan de Compétences</h2>
+                <p style="color: #666; margin-bottom: 1.5rem;">Identifiez vos forces, vos axes d'amélioration et définissez vos objectifs professionnels.</p>
+
+                <div class="form-group">
+                    <label>Quelles sont vos 5 principales compétences?</label>
+                    <textarea id="competenciesInput" placeholder="Ex: Communication, Gestion de projet, Python, Leadership..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Quels sont vos domaines d'expertise?</label>
+                    <textarea id="expertiseInput" placeholder="Ex: E-commerce, Data Science, RH, Marketing digital..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Axes d'amélioration à développer</label>
+                    <textarea id="improvementInput" placeholder="Compétences à acquérir, formations souhaitées..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Objectifs professionnels à 1, 3 et 5 ans</label>
+                    <textarea id="goalsInput" placeholder="Court terme, moyen terme, long terme..."></textarea>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveBilan()">💾 Enregistrer mon bilan</button>
+                <div id="bilanResult"></div>
+            </div>
+        </div>
+
+        <!-- STEP 4: COMMENTAIRES/AVIS -->
+        <div id="avis" class="step-content">
+            <div class="section-box">
+                <h2 class="section-title">Retours d'Expérience</h2>
+                <p style="color: #666; margin-bottom: 1.5rem;">Partagez votre avis sur l'accompagnement MySam et aidez-nous à nous améliorer.</p>
+
+                <div class="form-group">
+                    <label>Votre nom</label>
+                    <input type="text" id="commentName" placeholder="Prénom et nom">
+                </div>
+
+                <div class="form-group">
+                    <label>Votre email</label>
+                    <input type="email" id="commentEmail" placeholder="email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Note (1-5 étoiles)</label>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <button class="star-btn" data-value="1">★</button>
+                        <button class="star-btn" data-value="2">★</button>
+                        <button class="star-btn" data-value="3">★</button>
+                        <button class="star-btn" data-value="4">★</button>
+                        <button class="star-btn" data-value="5">★</button>
                     </div>
-                    <div class="cv-header-text">
-                        <h1 contenteditable="true" data-field="name">Prénom NOM</h1>
-                        <p contenteditable="true" data-field="poste">Titre du poste</p>
-                        <p contenteditable="true" data-field="contact">Email • Téléphone • Localisation</p>
-                    </div>
+                    <input type="hidden" id="commentRating" value="0">
                 </div>
 
-                <div class="cv-section">
-                    <h2>Accroche</h2>
-                    <p contenteditable="true" data-field="accroche" style="font-size: 9.5pt;">Décrivez votre profil professionnel en 2-3 lignes.</p>
+                <div class="form-group">
+                    <label>Votre commentaire</label>
+                    <textarea id="commentText" placeholder="Partagez votre expérience avec l'accompagnement MySam..."></textarea>
                 </div>
 
-                <div class="cv-section">
-                    <h2>Compétences</h2>
-                    <p contenteditable="true" data-field="competences" style="font-size: 9.5pt;">Compétence 1 • Compétence 2 • Compétence 3 • Compétence 4</p>
-                </div>
-
-                <div class="cv-section">
-                    <h2>Langues</h2>
-                    <p contenteditable="true" data-field="langues" style="font-size: 9.5pt;">Français (natif) • Anglais (courant)</p>
-                </div>
-
-                <div class="cv-section">
-                    <h2>Expériences</h2>
-                    <div class="cv-entry">
-                        <div class="cv-entry-title" contenteditable="true" data-field="exp1-title">Titre du poste</div>
-                        <div class="cv-entry-meta" contenteditable="true" data-field="exp1-meta">Entreprise • Localisation • Dates</div>
-                        <div class="cv-bullet" contenteditable="true" data-field="exp1-bullet1">• Responsabilité clé 1</div>
-                        <div class="cv-bullet" contenteditable="true" data-field="exp1-bullet2">• Responsabilité clé 2</div>
-                    </div>
-                </div>
-
-                <div class="cv-section">
-                    <h2>Formations</h2>
-                    <div class="cv-entry">
-                        <div class="cv-entry-title" contenteditable="true" data-field="form1-title">Diplôme obtenu</div>
-                        <div class="cv-entry-meta" contenteditable="true" data-field="form1-meta">Établissement • Année</div>
-                    </div>
-                </div>
-
-                <div class="cv-section" id="loisirs-section">
-                    <h2>Centres d'intérêt</h2>
-                    <p contenteditable="true" data-field="loisirs" style="font-size: 9.5pt;">Loisir 1 • Loisir 2 • Loisir 3</p>
-                </div>
+                <button class="btn btn-secondary" onclick="submitComment()">📤 Publier mon avis</button>
+                <div id="commentsResult"></div>
             </div>
         </div>
     </main>
 
     <script>
+        const GROQ_API_KEY = 'YOUR_GROQ_API_KEY'; // À remplacer par ton clé
+        const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+        
         const colors = {
             Violet: { header: '#6B4C9A', border: '#9b7ba8' },
             Blue: { header: '#1a1a4d', border: '#2d2d7f' },
@@ -486,10 +710,18 @@
             Orange: { header: '#d97706', border: '#ff8c42' }
         };
 
-        const cvPage = document.getElementById('cvPage');
         let currentColor = 'Violet';
+        let currentRating = 0;
 
-        // Color swatches
+        // ===== STEP NAVIGATION =====
+        function switchStep(stepId) {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.step-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(stepId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ===== CV GENERATOR =====
         document.querySelectorAll('.color-swatch').forEach(swatch => {
             swatch.addEventListener('click', () => {
                 document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
@@ -594,27 +826,172 @@
         // PDF Export
         function exportPDF() {
             const element = document.getElementById('cvPage');
-            const opt = {
-                margin: 0,
-                filename: 'CV.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { format: 'a4', orientation: 'portrait' }
-            };
-
-            // Fallback simple pour navigateurs sans html2pdf
             if (typeof html2pdf === 'undefined') {
                 window.print();
             } else {
+                const opt = {
+                    margin: 0,
+                    filename: 'CV.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { format: 'a4', orientation: 'portrait' }
+                };
                 html2pdf().set(opt).from(element).save();
             }
         }
 
-        // Load on page load
-        window.addEventListener('load', loadFromLocalStorage);
+        // ===== ANALYSE CV PAR IA =====
+        async function analyzeCV() {
+            const input = document.getElementById('analyzeInput').value.trim();
+            if (!input) {
+                alert('Veuillez entrer du texte à analyser');
+                return;
+            }
+
+            const resultDiv = document.getElementById('analyzeResult');
+            resultDiv.innerHTML = '<div class="result-box" style="text-align: center;"><div class="loading"></div> Analyse en cours...</div>';
+
+            try {
+                const response = await fetch(GROQ_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${GROQ_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'mixtral-8x7b-32768',
+                        messages: [{
+                            role: 'user',
+                            content: `Analysez ce CV/profil professionnel et donnez une évaluation détaillée:
+- Points forts
+- Axes d'amélioration
+- Recommandations pour les candidatures
+- Secteurs/postes recommandés
+
+Texte à analyser:\n${input}`
+                        }],
+                        max_tokens: 1000
+                    })
+                });
+
+                const data = await response.json();
+                const analysis = data.choices[0].message.content;
+
+                resultDiv.innerHTML = `<div class="result-box">
+                    <div class="result-title">📊 Analyse de votre profil</div>
+                    <div class="result-content">${analysis}</div>
+                </div>`;
+
+                localStorage.setItem('lastAnalysis', analysis);
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result-box" style="border-left-color: #ff6b6b;">
+                    <div class="result-title">❌ Erreur</div>
+                    <div class="result-content">Erreur API: ${error.message}\n\nAssurez-vous que votre clé Groq est valide.</div>
+                </div>`;
+            }
+        }
+
+        // ===== BILAN DE COMPÉTENCES =====
+        function saveBilan() {
+            const bilan = {
+                competencies: document.getElementById('competenciesInput').value,
+                expertise: document.getElementById('expertiseInput').value,
+                improvement: document.getElementById('improvementInput').value,
+                goals: document.getElementById('goalsInput').value,
+                date: new Date().toLocaleDateString('fr-FR')
+            };
+
+            localStorage.setItem('myBilan', JSON.stringify(bilan));
+
+            const resultDiv = document.getElementById('bilanResult');
+            resultDiv.innerHTML = `<div class="result-box">
+                <div class="result-title">✅ Bilan enregistré</div>
+                <div class="result-content">Votre bilan de compétences a été sauvegardé le ${bilan.date}</div>
+            </div>`;
+        }
+
+        // ===== COMMENTAIRES =====
+        document.querySelectorAll('.star-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentRating = parseInt(btn.dataset.value);
+                document.getElementById('commentRating').value = currentRating;
+                document.querySelectorAll('.star-btn').forEach((b, i) => {
+                    b.style.color = (i + 1) <= currentRating ? '#FFD700' : '#ccc';
+                });
+            });
+        });
+
+        function submitComment() {
+            const name = document.getElementById('commentName').value.trim();
+            const email = document.getElementById('commentEmail').value.trim();
+            const rating = parseInt(document.getElementById('commentRating').value);
+            const text = document.getElementById('commentText').value.trim();
+
+            if (!name || !email || !rating || !text) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            const comment = {
+                name,
+                email,
+                rating,
+                text,
+                date: new Date().toLocaleDateString('fr-FR')
+            };
+
+            let comments = JSON.parse(localStorage.getItem('comments') || '[]');
+            comments.unshift(comment);
+            localStorage.setItem('comments', JSON.stringify(comments));
+
+            const resultDiv = document.getElementById('commentsResult');
+            resultDiv.innerHTML = `<div class="result-box">
+                <div class="result-title">✅ Merci pour votre avis!</div>
+                <div class="result-content">Votre commentaire a été publié avec succès.</div>
+            </div>`;
+
+            document.getElementById('commentName').value = '';
+            document.getElementById('commentEmail').value = '';
+            document.getElementById('commentText').value = '';
+            currentRating = 0;
+            document.getElementById('commentRating').value = 0;
+            document.querySelectorAll('.star-btn').forEach(b => b.style.color = '#ccc');
+
+            displayComments();
+        }
+
+        function displayComments() {
+            const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+            const resultDiv = document.getElementById('commentsResult');
+
+            if (comments.length === 0) {
+                resultDiv.innerHTML += '<p style="color: #999; text-align: center; margin-top: 2rem;">Aucun avis pour le moment.</p>';
+                return;
+            }
+
+            let html = '<div style="margin-top: 2rem;"><h3 style="color: var(--dp); margin-bottom: 1rem;">Avis récents</h3>';
+            comments.slice(0, 5).forEach(comment => {
+                const stars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
+                html += `<div class="result-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <strong>${comment.name}</strong>
+                        <span style="color: #FFD700;">${stars}</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #999; margin-bottom: 0.5rem;">${comment.date}</div>
+                    <p style="color: #666; margin: 0;">"${comment.text}"</p>
+                </div>`;
+            });
+            html += '</div>';
+            resultDiv.innerHTML += html;
+        }
+
+        // ===== INIT =====
+        window.addEventListener('load', () => {
+            loadFromLocalStorage();
+            displayComments();
+        });
     </script>
 
-    <!-- Simple PDF export fallback (uncomment if needed) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
