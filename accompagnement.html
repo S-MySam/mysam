@@ -273,7 +273,7 @@ function Landing({go}){
   );
 }
 
-function ImportScreen({go,onGenerate}){
+function ImportScreen({go,onGenerate,photo,setPhoto}){
   const[err,setErr]=React.useState('');
   const[busy,setBusy]=React.useState(false);
   const[info,setInfo]=React.useState('');
@@ -302,6 +302,7 @@ function ImportScreen({go,onGenerate}){
         <div style={{fontSize:'3rem',marginBottom:'16px'}}>📁</div>
         <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:'1.8rem',marginBottom:'16px',fontWeight:700}}>Importer votre CV</h2>
         <p style={{color:'rgba(255,255,255,.55)',marginBottom:'32px',lineHeight:1.6}}>Formats acceptés : <strong style={{color:'#fff'}}>PDF, Word (.docx), Texte (.txt)</strong></p>
+        <PhotoUpload photo={photo} onChange={setPhoto}/>
         <input ref={fileRef} type="file" accept="*/*" style={{display:'none'}} onChange={e=>handleFile(e.target.files[0])}/>
         <button disabled={busy} onClick={()=>fileRef.current?.click()} style={{...btnOr,width:'100%',justifyContent:'center',marginBottom:'16px',opacity:busy?0.7:1,fontSize:'1rem',padding:'16px'}}>
           {busy?'⏳ Traitement...':'📁 Choisir un fichier'}
@@ -314,7 +315,7 @@ function ImportScreen({go,onGenerate}){
   );
 }
 
-function ManualScreen({go,onGenerate}){
+function ManualScreen({go,onGenerate,photo,setPhoto}){
   const[f,setF]=React.useState({});
   const[err,setErr]=React.useState('');
   const[busy,setBusy]=React.useState(false);
@@ -336,6 +337,8 @@ function ManualScreen({go,onGenerate}){
         <button onClick={()=>go('landing')} style={{background:'none',border:'none',color:'rgba(255,255,255,.6)',cursor:'pointer',fontSize:'.9rem',marginBottom:'24px',display:'block'}}>← Retour</button>
         <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:'1.8rem',marginBottom:'8px',fontWeight:700}}>Vos informations</h2>
         <p style={{color:'#94a3b8',marginBottom:'28px',lineHeight:1.6}}>L'IA optimisera la formulation. Soyez précis et honnête.</p>
+
+        <PhotoUpload photo={photo} onChange={setPhoto}/>
 
         <label style={lab}>Poste recherché *</label>
         <input style={inp} placeholder="Ex: Chef de projet digital" value={f.poste||''} onChange={e=>set('poste',e.target.value)}/>
@@ -391,49 +394,181 @@ function LoadingScreen(){
   );
 }
 
-function ResultScreen({data,go}){
-  function downloadPDF(){
-    const el=document.getElementById('cv-export');
-    if(!el)return;
-    html2pdf().set({margin:10,filename:(data.nom||'cv').replace(/\s+/g,'-').toLowerCase()+'-mysam.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true},jsPDF:{orientation:'portrait',unit:'mm',format:'a4'}}).from(el).save();
+const CV_COLORS={
+  violet:{name:'Violet',grad:'linear-gradient(135deg,#3B1F6B 0%,#5A2FA3 100%)',accent:'#3B1F6B',light:'#EDE7FF'},
+  bleu:{name:'Bleu',grad:'linear-gradient(135deg,#1E3A8A 0%,#2563EB 100%)',accent:'#1E3A8A',light:'#DBEAFE'},
+  vert:{name:'Vert',grad:'linear-gradient(135deg,#14532D 0%,#16A34A 100%)',accent:'#14532D',light:'#DCFCE7'},
+  rouge:{name:'Rouge',grad:'linear-gradient(135deg,#7F1D1D 0%,#DC2626 100%)',accent:'#7F1D1D',light:'#FEE2E2'},
+  gris:{name:'Gris',grad:'linear-gradient(135deg,#1F2937 0%,#4B5563 100%)',accent:'#1F2937',light:'#E5E7EB'},
+  orange:{name:'Orange',grad:'linear-gradient(135deg,#9A3412 0%,#FF6B35 100%)',accent:'#9A3412',light:'#FFE4D6'}
+};
+
+function setPath(obj,path,value){
+  if(path.length===0)return value;
+  const key=path[0];
+  const rest=path.slice(1);
+  if(Array.isArray(obj)){
+    const copy=obj.slice();
+    copy[key]=setPath(obj[key],rest,value);
+    return copy;
+  }
+  return Object.assign({},obj,{[key]:setPath(obj?obj[key]:undefined,rest,value)});
+}
+
+function EditableField({value,path,setField,tag,style,placeholder,multiline}){
+  const[editing,setEditing]=React.useState(false);
+  const[val,setVal]=React.useState(value||'');
+  React.useEffect(function(){setVal(value||'');},[value]);
+  function commit(){
+    setEditing(false);
+    if(val!==value)setField(path,val);
+  }
+  if(editing){
+    const common={
+      autoFocus:true,value:val,
+      onChange:function(e){setVal(e.target.value);},
+      onBlur:commit,
+      onKeyDown:function(e){
+        if(e.key==='Enter'&&!multiline){e.preventDefault();commit();}
+        if(e.key==='Escape'){setVal(value||'');setEditing(false);}
+      },
+      style:Object.assign({},style,{background:'#fff',border:'1.5px solid #5A2FA3',borderRadius:'6px',padding:'2px 6px',fontFamily:'inherit',width:'100%',boxSizing:'border-box',color:'#1A1030'})
+    };
+    return multiline?<textarea {...common} rows={2}/>:<input {...common}/>;
+  }
+  const Tag=tag||'span';
+  return(
+    <Tag onClick={function(){setEditing(true);}} title="Cliquer pour modifier" style={Object.assign({},style,{cursor:'text'})}>
+      {value||placeholder||'—'}
+    </Tag>
+  );
+}
+
+function PhotoUpload({photo,onChange}){
+  const fileRef=React.useRef();
+  function handleFile(file){
+    if(!file||!file.type.startsWith('image/'))return;
+    const reader=new FileReader();
+    reader.onload=function(e){onChange(e.target.result);};
+    reader.readAsDataURL(file);
   }
   return(
-    <div style={light}>
-      <div style={{maxWidth:'860px',margin:'0 auto'}}>
-        <div style={{display:'flex',gap:'12px',marginBottom:'24px',flexWrap:'wrap'}}>
-          <button style={{padding:'10px 18px',background:'#fff',border:'1px solid #cbd5e1',borderRadius:'10px',fontWeight:600,cursor:'pointer',color:'#1A1030'}} onClick={()=>go('landing')}>← Nouveau CV</button>
-          <button style={{...btnOr,padding:'10px 24px'}} onClick={downloadPDF}>⬇ Télécharger PDF</button>
-        </div>
-        <div style={{background:'#e8f5e9',borderRadius:'10px',padding:'12px 16px',marginBottom:'24px',color:'#1b5e20',fontWeight:600,fontSize:'.9rem'}}>
-          ✅ CV généré avec succès ! Téléchargez-le en PDF.
-        </div>
-        <CVRender d={data}/>
+    <div style={{display:'flex',alignItems:'center',gap:'14px',marginBottom:'20px'}}>
+      <div onClick={function(){fileRef.current&&fileRef.current.click();}} style={{width:'64px',height:'64px',borderRadius:'50%',overflow:'hidden',background:'rgba(255,255,255,.08)',border:'1.5px dashed rgba(255,255,255,.3)',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',flexShrink:0}}>
+        {photo?<img src={photo} alt="Aperçu photo de profil" style={{width:'100%',height:'100%',objectFit:'cover'}}/>:<span style={{fontSize:'1.3rem'}}>📷</span>}
+      </div>
+      <div>
+        <button type="button" onClick={function(){fileRef.current&&fileRef.current.click();}} style={{background:'none',border:'1px solid rgba(255,255,255,.25)',color:'rgba(255,255,255,.75)',borderRadius:'8px',padding:'6px 12px',fontSize:'.78rem',cursor:'pointer'}}>{photo?'Changer la photo':'Ajouter une photo (optionnel)'}</button>
+        {photo&&<button type="button" onClick={function(){onChange(null);}} style={{background:'none',border:'none',color:'#fca5a5',fontSize:'.78rem',marginLeft:'8px',cursor:'pointer'}}>Retirer</button>}
+        <input ref={fileRef} type="file" accept="image/*" style={{display:'none'}} onChange={e=>handleFile(e.target.files[0])}/>
       </div>
     </div>
   );
 }
 
-function CVRender({d}){
+function ColorPicker({value,onChange}){
+  return(
+    <div style={{display:'flex',gap:'10px',alignItems:'center',marginBottom:'20px',flexWrap:'wrap'}}>
+      <span style={{fontSize:'.82rem',fontWeight:700,color:'#4A3870'}}>Couleur du CV :</span>
+      {Object.keys(CV_COLORS).map(function(k){
+        const c=CV_COLORS[k];
+        return(
+          <button key={k} onClick={function(){onChange(k);}} title={c.name} aria-label={c.name}
+            style={{width:'28px',height:'28px',borderRadius:'50%',border:value===k?'3px solid #1A1030':'2px solid #fff',boxShadow:'0 0 0 1px #cbd5e1',background:c.accent,cursor:'pointer',padding:0}}/>
+        );
+      })}
+    </div>
+  );
+}
+
+function ResultScreen({data,go,photo,onNew}){
+  const DRAFT_KEY='mysam_cv_draft';
+  const[cvEdit,setCvEdit]=React.useState(data);
+  const[color,setColor]=React.useState('violet');
+  const[cvPhoto,setCvPhoto]=React.useState(photo||null);
+  const[draft,setDraft]=React.useState(null);
+  const[showRestore,setShowRestore]=React.useState(false);
+
+  React.useEffect(function(){
+    try{
+      const raw=localStorage.getItem(DRAFT_KEY);
+      if(raw){
+        const d=JSON.parse(raw);
+        if(d&&d.data&&d.data.nom===data.nom){setDraft(d);setShowRestore(true);}
+      }
+    }catch(e){}
+  },[]);
+
+  React.useEffect(function(){
+    try{localStorage.setItem(DRAFT_KEY,JSON.stringify({data:cvEdit,color:color,photo:cvPhoto}));}catch(e){}
+  },[cvEdit,color,cvPhoto]);
+
+  function restoreDraft(){
+    if(!draft)return;
+    setCvEdit(draft.data);
+    setColor(draft.color||'violet');
+    setCvPhoto(draft.photo||null);
+    setShowRestore(false);
+  }
+
+  function setField(path,value){
+    setCvEdit(function(prev){return setPath(prev,path,value);});
+  }
+
+  function downloadPDF(){
+    const el=document.getElementById('cv-export');
+    if(!el)return;
+    html2pdf().set({margin:10,filename:(cvEdit.nom||'cv').replace(/\s+/g,'-').toLowerCase()+'-mysam.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true},jsPDF:{orientation:'portrait',unit:'mm',format:'a4'}}).from(el).save();
+  }
+  return(
+    <div style={light}>
+      <div style={{maxWidth:'860px',margin:'0 auto'}}>
+        {showRestore&&(
+          <div style={{background:'#fff7ed',border:'1.5px solid #fdba74',borderRadius:'10px',padding:'12px 16px',marginBottom:'20px',display:'flex',alignItems:'center',gap:'12px',flexWrap:'wrap'}}>
+            <span style={{fontSize:'.88rem',color:'#9a3412',flex:1}}>💾 Un brouillon de ce CV a été trouvé (modifications précédentes non terminées).</span>
+            <button onClick={restoreDraft} style={{padding:'6px 14px',background:'#FF6B35',color:'#fff',border:'none',borderRadius:'8px',fontWeight:600,fontSize:'.82rem',cursor:'pointer'}}>Restaurer</button>
+            <button onClick={function(){setShowRestore(false);}} style={{padding:'6px 14px',background:'none',border:'1px solid #fdba74',color:'#9a3412',borderRadius:'8px',fontWeight:600,fontSize:'.82rem',cursor:'pointer'}}>Ignorer</button>
+          </div>
+        )}
+        <div style={{display:'flex',gap:'12px',marginBottom:'24px',flexWrap:'wrap'}}>
+          <button style={{padding:'10px 18px',background:'#fff',border:'1px solid #cbd5e1',borderRadius:'10px',fontWeight:600,cursor:'pointer',color:'#1A1030'}} onClick={onNew}>← Nouveau CV</button>
+          <button style={{...btnOr,padding:'10px 24px'}} onClick={downloadPDF}>⬇ Télécharger PDF</button>
+        </div>
+        <div style={{background:'#e8f5e9',borderRadius:'10px',padding:'12px 16px',marginBottom:'24px',color:'#1b5e20',fontWeight:600,fontSize:'.9rem'}}>
+          ✅ CV généré avec succès ! Cliquez sur un champ pour le modifier, choisissez une couleur, puis téléchargez-le en PDF.
+        </div>
+        <ColorPicker value={color} onChange={setColor}/>
+        <CVRender d={cvEdit} color={color} photo={cvPhoto} setField={setField}/>
+      </div>
+    </div>
+  );
+}
+
+function CVRender({d,color,photo,setField}){
+  const c=CV_COLORS[color]||CV_COLORS.violet;
   const sec={marginBottom:'28px'};
-  const secT={fontSize:'1rem',fontWeight:700,color:'#3B1F6B',marginBottom:'12px',paddingBottom:'6px',borderBottom:'2px solid #EDE7FF'};
+  const secT={fontSize:'1rem',fontWeight:700,color:c.accent,marginBottom:'12px',paddingBottom:'6px',borderBottom:'2px solid '+c.light};
   return(
     <div id="cv-export" style={{background:'#fff',padding:'40px',borderRadius:'12px',boxShadow:'0 4px 24px rgba(59,31,107,.1)',fontFamily:"'Inter',sans-serif"}}>
-      <div style={{background:'linear-gradient(135deg,#3B1F6B 0%,#5A2FA3 100%)',color:'#fff',padding:'36px 40px',borderRadius:'8px',marginBottom:'32px',textAlign:'center'}}>
-        <div style={{fontSize:'1.4rem',fontWeight:700,opacity:.85,marginBottom:'6px',letterSpacing:'.05em',textTransform:'uppercase'}}>{d.poste_recherche||''}</div>
-        <div style={{fontSize:'2rem',fontWeight:800,marginBottom:'14px'}}>{d.nom||''}</div>
-        <div style={{fontSize:'.88rem',opacity:.8,display:'flex',gap:'16px',justifyContent:'center',flexWrap:'wrap'}}>
-          {d.contact?.ville_cp&&<span>📍 {d.contact.ville_cp}</span>}
-          {d.contact?.email&&<span>✉️ {d.contact.email}</span>}
-          {d.contact?.telephone&&<span>📞 {d.contact.telephone}</span>}
-          {d.contact?.linkedin&&<span>🔗 {d.contact.linkedin}</span>}
+      <div style={{background:c.grad,color:'#fff',padding:'36px 40px',borderRadius:'8px',marginBottom:'32px',display:'flex',alignItems:'center',justifyContent:photo?'flex-start':'center',gap:photo?'24px':'0',textAlign:photo?'left':'center'}}>
+        {photo&&<img src={photo} alt="Photo de profil" style={{width:'96px',height:'96px',borderRadius:'50%',objectFit:'cover',border:'3px solid rgba(255,255,255,.6)',flexShrink:0}}/>}
+        <div style={{flex:photo?'1':'none',minWidth:0}}>
+          <div style={{fontSize:'1.4rem',fontWeight:700,opacity:.85,marginBottom:'6px',letterSpacing:'.05em',textTransform:'uppercase'}}><EditableField value={d.poste_recherche} path={['poste_recherche']} setField={setField}/></div>
+          <div style={{fontSize:'2rem',fontWeight:800,marginBottom:'14px'}}><EditableField value={d.nom} path={['nom']} setField={setField}/></div>
+          <div style={{fontSize:'.88rem',opacity:.8,display:'flex',gap:'16px',justifyContent:photo?'flex-start':'center',flexWrap:'wrap'}}>
+            {(d.contact?.ville_cp||setField)&&<span>📍 <EditableField value={d.contact?.ville_cp} path={['contact','ville_cp']} setField={setField}/></span>}
+            {(d.contact?.email||setField)&&<span>✉️ <EditableField value={d.contact?.email} path={['contact','email']} setField={setField}/></span>}
+            {(d.contact?.telephone||setField)&&<span>📞 <EditableField value={d.contact?.telephone} path={['contact','telephone']} setField={setField}/></span>}
+            {(d.contact?.linkedin||setField)&&<span>🔗 <EditableField value={d.contact?.linkedin} path={['contact','linkedin']} setField={setField}/></span>}
+          </div>
         </div>
       </div>
-      {d.accroche&&<div style={sec}><div style={secT}>À propos</div><p style={{lineHeight:1.75,color:'#4A3870',fontSize:'.95rem'}}>{d.accroche}</p></div>}
-      {d.competences?.length>0&&<div style={sec}><div style={secT}>Compétences</div><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'12px'}}>{d.competences.map((cat,i)=><div key={i} style={{background:'#FAF9FF',borderRadius:'8px',padding:'12px 14px',border:'1px solid #E0D8F5'}}><div style={{fontWeight:700,color:'#5A2FA3',fontSize:'.82rem',textTransform:'uppercase',letterSpacing:'.05em',marginBottom:'6px'}}>{cat.categorie}</div><div style={{color:'#4A3870',fontSize:'.88rem',lineHeight:1.6}}>{Array.isArray(cat.items)?cat.items.join(' · '):cat.items}</div></div>)}</div></div>}
-      {d.langues?.length>0&&<div style={sec}><div style={secT}>Langues</div><div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>{d.langues.map((l,i)=><div key={i} style={{background:'#EDE7FF',borderRadius:'50px',padding:'6px 16px',fontSize:'.88rem',color:'#3B1F6B',fontWeight:600}}>{l.langue} — {l.niveau}</div>)}</div></div>}
-      {d.experiences?.length>0&&<div style={sec}><div style={secT}>Expériences professionnelles</div>{d.experiences.map((exp,i)=><div key={i} style={{marginBottom:'20px',paddingLeft:'16px',borderLeft:'3px solid #EDE7FF'}}><div style={{fontWeight:700,color:'#1A1030',fontSize:'1rem',marginBottom:'2px'}}>{exp.titre}</div><div style={{color:'#5A2FA3',fontSize:'.88rem',marginBottom:'8px',fontWeight:500}}>{[exp.entreprise,exp.lieu,exp.dates].filter(Boolean).join(' · ')}</div>{Array.isArray(exp.bullets)&&exp.bullets.length>0&&<ul style={{margin:0,paddingLeft:'18px',color:'#4A3870',lineHeight:1.7,fontSize:'.9rem'}}>{exp.bullets.map((b,j)=><li key={j} style={{marginBottom:'4px'}}>{b}</li>)}</ul>}</div>)}</div>}
-      {d.formations?.length>0&&<div style={sec}><div style={secT}>Formations</div>{d.formations.map((form,i)=><div key={i} style={{marginBottom:'14px',paddingLeft:'16px',borderLeft:'3px solid #EDE7FF'}}><div style={{fontWeight:700,color:'#1A1030',marginBottom:'2px'}}>{form.diplome}</div><div style={{color:'#5A2FA3',fontSize:'.88rem',marginBottom:'4px',fontWeight:500}}>{[form.ecole,form.dates].filter(Boolean).join(' · ')}</div>{form.detail&&<div style={{color:'#4A3870',fontSize:'.88rem'}}>{form.detail}</div>}</div>)}</div>}
-      {d.interets?.length>0&&<div style={sec}><div style={secT}>Centres d'intérêt</div><div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>{d.interets.map((int,i)=><div key={i} style={{background:'#FAF9FF',border:'1px solid #E0D8F5',borderRadius:'8px',padding:'10px 14px',fontSize:'.88rem',color:'#4A3870'}}>{int.icone} <strong>{int.titre}</strong>{int.detail?` — ${int.detail}`:''}</div>)}</div></div>}
+      {(d.accroche||setField)&&<div style={sec}><div style={secT}>À propos</div><p style={{lineHeight:1.75,color:'#4A3870',fontSize:'.95rem'}}><EditableField value={d.accroche} path={['accroche']} setField={setField} tag="span" multiline/></p></div>}
+      {d.competences?.length>0&&<div style={sec}><div style={secT}>Compétences</div><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'12px'}}>{d.competences.map((cat,i)=><div key={i} style={{background:'#FAF9FF',borderRadius:'8px',padding:'12px 14px',border:'1px solid #E0D8F5'}}><div style={{fontWeight:700,color:'#5A2FA3',fontSize:'.82rem',textTransform:'uppercase',letterSpacing:'.05em',marginBottom:'6px'}}><EditableField value={cat.categorie} path={['competences',i,'categorie']} setField={setField}/></div><div style={{color:'#4A3870',fontSize:'.88rem',lineHeight:1.6}}>{Array.isArray(cat.items)?cat.items.join(' · '):cat.items}</div></div>)}</div></div>}
+      {d.langues?.length>0&&<div style={sec}><div style={secT}>Langues</div><div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>{d.langues.map((l,i)=><div key={i} style={{background:c.light,borderRadius:'50px',padding:'6px 16px',fontSize:'.88rem',color:c.accent,fontWeight:600}}><EditableField value={l.langue} path={['langues',i,'langue']} setField={setField}/> — <EditableField value={l.niveau} path={['langues',i,'niveau']} setField={setField}/></div>)}</div></div>}
+      {d.experiences?.length>0&&<div style={sec}><div style={secT}>Expériences professionnelles</div>{d.experiences.map((exp,i)=><div key={i} style={{marginBottom:'20px',paddingLeft:'16px',borderLeft:'3px solid '+c.light}}><div style={{fontWeight:700,color:'#1A1030',fontSize:'1rem',marginBottom:'2px'}}><EditableField value={exp.titre} path={['experiences',i,'titre']} setField={setField}/></div><div style={{color:c.accent,fontSize:'.88rem',marginBottom:'8px',fontWeight:500,display:'flex',gap:'6px',flexWrap:'wrap'}}><EditableField value={exp.entreprise} path={['experiences',i,'entreprise']} setField={setField}/>·<EditableField value={exp.lieu} path={['experiences',i,'lieu']} setField={setField}/>·<EditableField value={exp.dates} path={['experiences',i,'dates']} setField={setField}/></div>{Array.isArray(exp.bullets)&&exp.bullets.length>0&&<ul style={{margin:0,paddingLeft:'18px',color:'#4A3870',lineHeight:1.7,fontSize:'.9rem'}}>{exp.bullets.map((b,j)=><li key={j} style={{marginBottom:'4px'}}><EditableField value={b} path={['experiences',i,'bullets',j]} setField={setField}/></li>)}</ul>}</div>)}</div>}
+      {d.formations?.length>0&&<div style={sec}><div style={secT}>Formations</div>{d.formations.map((form,i)=><div key={i} style={{marginBottom:'14px',paddingLeft:'16px',borderLeft:'3px solid '+c.light}}><div style={{fontWeight:700,color:'#1A1030',marginBottom:'2px'}}><EditableField value={form.diplome} path={['formations',i,'diplome']} setField={setField}/></div><div style={{color:c.accent,fontSize:'.88rem',marginBottom:'4px',fontWeight:500,display:'flex',gap:'6px',flexWrap:'wrap'}}><EditableField value={form.ecole} path={['formations',i,'ecole']} setField={setField}/>·<EditableField value={form.dates} path={['formations',i,'dates']} setField={setField}/></div>{(form.detail||setField)&&<div style={{color:'#4A3870',fontSize:'.88rem'}}><EditableField value={form.detail} path={['formations',i,'detail']} setField={setField}/></div>}</div>)}</div>}
+      {d.interets?.length>0&&<div style={sec}><div style={secT}>Centres d'intérêt</div><div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>{d.interets.map((int,i)=><div key={i} style={{background:'#FAF9FF',border:'1px solid #E0D8F5',borderRadius:'8px',padding:'10px 14px',fontSize:'.88rem',color:'#4A3870'}}>{int.icone} <strong><EditableField value={int.titre} path={['interets',i,'titre']} setField={setField}/></strong> — <EditableField value={int.detail} path={['interets',i,'detail']} setField={setField}/></div>)}</div></div>}
     </div>
   );
 }
@@ -453,6 +588,7 @@ function App(){
   const[screen,setScreen]=React.useState('landing');
   const[cvData,setCvData]=React.useState(null);
   const[errMsg,setErrMsg]=React.useState('');
+  const[photo,setPhoto]=React.useState(null);
 
   async function generate(text){
     setScreen('loading');
@@ -460,11 +596,15 @@ function App(){
     catch(e){setErrMsg(e.message);setScreen('error');}
   }
 
+  function newCv(){
+    setCvData(null);setPhoto(null);setScreen('landing');
+  }
+
   if(screen==='landing')return <Landing go={setScreen}/>;
-  if(screen==='import')return <ImportScreen go={setScreen} onGenerate={generate}/>;
-  if(screen==='manual')return <ManualScreen go={setScreen} onGenerate={generate}/>;
+  if(screen==='import')return <ImportScreen go={setScreen} onGenerate={generate} photo={photo} setPhoto={setPhoto}/>;
+  if(screen==='manual')return <ManualScreen go={setScreen} onGenerate={generate} photo={photo} setPhoto={setPhoto}/>;
   if(screen==='loading')return <LoadingScreen/>;
-  if(screen==='result')return <ResultScreen data={cvData} go={setScreen}/>;
+  if(screen==='result')return <ResultScreen data={cvData} go={setScreen} photo={photo} onNew={newCv}/>;
   if(screen==='error')return <ErrorScreen msg={errMsg} go={setScreen}/>;
   return null;
 }
