@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entreprises — MySam</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --dp: #3B1F6B; --mp: #5A2FA3; --sp: #7B4FCF;
+        --ll: #EDE7FF; --lm: #C9B8F0;
+        --or: #FF6B35; --oh: #E85520;
+        --wh: #FFFFFF; --ow: #FAF9FF;
+        --td: #1A1030; --tm: #4A3870; --tl: #8270AA;
+        --bd: #E0D8F5;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;line-height:1.6;color:#333;background:#fff}
+    .container{max-width:1200px;margin:0 auto;padding:0 32px}
+    a{text-decoration:none}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;font-size:.95rem;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .25s ease;white-space:nowrap}
+    .btn-or{background:var(--or);color:var(--wh)}.btn-or:hover{background:var(--oh);transform:translateY(-2px)}
+    .btn-wh{background:var(--wh);color:var(--dp)}.btn-wh:hover{background:var(--ll);transform:translateY(-2px)}
+
+    .nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd);transition:box-shadow .3s}
+    .nav.s{box-shadow:0 4px 32px rgba(59,31,107,.10)}
+    .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+    .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .logo-mark{width:40px;height:40px;border-radius:8px;overflow:hidden}
+    .logo-img{width:40px;height:40px;object-fit:contain;display:block}
+    .logo-text{font-weight:700;font-size:1.2rem;color:var(--dp)}
+    .logo-sub{font-size:.65rem;color:var(--tl);font-weight:400;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1}
+    .nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center;list-style:none}
+    .nav-links a{padding:8px 14px;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--tm);transition:all .2s}
+    .nav-links a:hover,.nav-links a.act{color:var(--mp);background:var(--ll)}
+    .nav-acts{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .nav-login{font-size:.875rem;font-weight:500;color:var(--mp);padding:8px 12px;border-radius:8px;transition:all .2s}
+    .nav-login:hover{background:var(--ll)}
+    .hburg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;border:none;background:none}
+    .hburg span{display:block;width:22px;height:2px;background:var(--dp);border-radius:2px}
+    @media(max-width:768px){.nav-links,.nav-login{display:none}.hburg{display:flex}}
+    main{padding-top:72px}
+
+    /* Hero */
+    .hero{background:var(--dp);color:#fff;padding:clamp(3.5rem,10vw,6rem) 2rem}
+    .hero-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+    .hero-brow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:6px 16px;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:1.2rem}
+    .hero h1 em{font-style:normal;color:var(--lm)}
+    .hero-p{color:rgba(255,255,255,.75);font-size:1.02rem;line-height:1.75;margin-bottom:2rem;max-width:520px}
+    .hero-stats{display:flex;gap:36px;margin-top:2.5rem;flex-wrap:wrap}
+    .stat-n{font-size:1.8rem;font-weight:800}
+    .stat-l{font-size:.8rem;color:rgba(255,255,255,.6)}
+    .hero-card{background:#fff;border-radius:20px;padding:2.2rem;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .hero-card-ico{font-size:2.2rem;margin-bottom:14px}
+    .hero-card h3{color:var(--dp);font-size:1.2rem;margin-bottom:10px;font-weight:700}
+    .hero-card p{color:var(--tm);font-size:.9rem;line-height:1.6;margin-bottom:16px}
+    .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+    .tag{background:var(--ll);color:var(--mp);font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:50px}
+
+    /* Services */
+    .services{padding:clamp(3rem,8vw,5rem) 2rem;background:var(--ow)}
+    .section-title{text-align:center;font-size:clamp(1.8rem,5vw,2.4rem);color:var(--dp);margin-bottom:1rem;font-weight:700}
+    .section-sub{text-align:center;color:var(--tm);max-width:600px;margin:0 auto 3rem;font-size:1rem}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1200px;margin:0 auto}
+    .svc-card{background:#fff;border:2px solid var(--bd);border-radius:16px;padding:2.2rem;box-shadow:0 4px 20px rgba(74,26,111,.06);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+    .svc-card:hover{transform:translateY(-8px);box-shadow:0 12px 30px rgba(74,26,111,.16)}
+    .svc-icon{font-size:2.6rem;margin-bottom:1rem}
+    .svc-card h3{font-size:1.2rem;color:var(--dp);margin-bottom:.7rem;font-weight:700}
+    .svc-card p{font-size:.92rem;color:var(--tm);line-height:1.65;margin-bottom:1.4rem;flex:1}
+    .svc-card a{font-weight:700;color:var(--mp);display:inline-flex;align-items:center;gap:6px;font-size:.9rem}
+    .svc-card a:hover{color:var(--dp)}
+
+    /* Model */
+    .model{padding:clamp(3rem,8vw,5rem) 2rem}
+    .model-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+    .model-card{border:2px solid var(--bd);border-radius:16px;padding:1.8rem;text-align:center}
+    .model-card h4{color:var(--dp);font-weight:700;margin-bottom:8px}
+    .model-card p{color:var(--tm);font-size:.88rem;line-height:1.6}
+
+    /* CTA */
+    .cta{background:var(--dp);color:#fff;padding:clamp(3rem,8vw,5rem) 2rem;text-align:center}
+    .cta h2{font-size:clamp(1.8rem,5vw,2.5rem);margin-bottom:1rem;font-weight:700}
+    .cta p{font-size:1.05rem;margin-bottom:2rem;color:rgba(255,255,255,.9);max-width:600px;margin-left:auto;margin-right:auto}
+
+    footer{background:var(--td);color:rgba(255,255,255,.75);padding:60px 0 28px}
+    .ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px;margin-bottom:48px}
+    .ft-brand .logo-text{color:var(--wh)}
+    .ft-brand>p{font-size:.85rem;line-height:1.7;color:rgba(255,255,255,.5);max-width:260px;margin-top:10px}
+    .ft-social{display:flex;gap:10px;margin-top:16px}
+    .soc{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;text-decoration:none}
+    .soc:hover{background:var(--mp);border-color:var(--mp);color:var(--wh)}
+    .ft-col h4{font-size:.85rem;font-weight:700;color:var(--wh);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+    .ft-col ul{display:flex;flex-direction:column;gap:10px;list-style:none}
+    .ft-col ul a{font-size:.85rem;color:rgba(255,255,255,.5);transition:color .2s}
+    .ft-col ul a:hover{color:var(--lm)}
+    .ft-contacts{display:flex;flex-direction:column;gap:12px}
+    .fci{display:flex;align-items:flex-start;gap:10px}
+    .fci-ico{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+    .fci strong{display:block;font-size:.78rem;font-weight:600;color:var(--wh)}
+    .fci span{font-size:.78rem;color:rgba(255,255,255,.45)}
+    .ft-bot{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .ft-bot p{font-size:.78rem;color:rgba(255,255,255,.3)}
+    .ft-links{display:flex;gap:20px}
+    .ft-links a{font-size:.78rem;color:rgba(255,255,255,.3);transition:color .2s}
+    .ft-links a:hover{color:rgba(255,255,255,.7)}
+    @media(max-width:1024px){.hero-grid{grid-template-columns:1fr}.ft-grid{grid-template-columns:1fr 1fr;gap:28px}}
+    @media(max-width:768px){.ft-grid{grid-template-columns:1fr;gap:24px}.hero-stats{flex-direction:column;gap:14px}}
+</style>
+</head>
+<body>
+    <nav class="nav" id="navbar">
+      <div class="container">
+        <div class="nav-in">
+          <a href="index.html" class="logo">
+            <div class="logo-mark"><img src="assets/Logo MySam.png" alt="MySam" class="logo-img"/></div>
+            <div><span class="logo-text">MySam</span><span class="logo-sub">Conseil &amp; Service</span></div>
+          </a>
+          <ul class="nav-links">
+            <li><a href="particuliers.html">Particuliers</a></li>
+            <li><a href="entreprises.html" class="act">Entreprises</a></li>
+            <li><a href="commerces.html">Commerces</a></li>
+            <li><a href="actualites.html">Actualit&eacute;s</a></li>
+            <li><a href="contact.html">Contactez-nous</a></li>
+          </ul>
+          <div class="nav-acts">
+            <a href="connexion.html" class="nav-login">Se connecter</a>
+            <a href="contact.html" class="btn btn-or">Contactez-nous</a>
+          </div>
+          <button class="hburg" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-grid">
+              <div>
+                <div class="hero-brow">Solutions Entreprises</div>
+                <h1>Structurez votre strat&eacute;gie,<br/><em>lib&eacute;rez le potentiel</em><br/>de vos &eacute;quipes.</h1>
+                <p class="hero-p">MySam accompagne les organisations dans leurs enjeux RH, de communication et de transformation &mdash; de la r&eacute;flexion strat&eacute;gique jusqu&rsquo;&agrave; la mise en&nbsp;&oelig;uvre op&eacute;rationnelle.</p>
+                <a href="contact.html" class="btn btn-wh">Acc&eacute;der aux solutions &rarr;</a>
+                <div class="hero-stats">
+                  <div><div class="stat-n">50+</div><div class="stat-l">Clients accompagn&eacute;s</div></div>
+                  <div><div class="stat-n">98%</div><div class="stat-l">Taux de satisfaction</div></div>
+                  <div><div class="stat-n">100%</div><div class="stat-l">D&eacute;di&eacute; &agrave; votre succ&egrave;s</div></div>
+                </div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-card-ico">🏢</div>
+                <h3>Conseil &amp; Accompagnement RH</h3>
+                <p>Vous cherchez &agrave; structurer votre strat&eacute;gie RH, renforcer votre communication ou accompagner vos &eacute;quipes&nbsp;? MySam intervient sur des enjeux vari&eacute;s.</p>
+                <div class="card-tags">
+                  <span class="tag">Strat&eacute;gie RH</span><span class="tag">Communication interne</span>
+                  <span class="tag">Formation</span><span class="tag">Team Building</span>
+                </div>
+                <a href="contact.html" class="btn btn-or">Nous contacter &rarr;</a>
+              </div>
+            </div>
+        </section>
+
+        <section class="services">
+            <h2 class="section-title">Nos domaines d&rsquo;intervention</h2>
+            <p class="section-sub">Trois expertises compl&eacute;mentaires pour accompagner la croissance de votre organisation.</p>
+            <div class="services-grid">
+                <div class="svc-card">
+                    <div class="svc-icon">🏢</div>
+                    <h3>RH &amp; Conseil strat&eacute;gique</h3>
+                    <p>Diagnostic organisationnel, strat&eacute;gie RH, accompagnement au changement et formation des &eacute;quipes.</p>
+                    <a href="rh-conseil.html">D&eacute;couvrir &rarr;</a>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon">📱</div>
+                    <h3>Communication &amp; Digital</h3>
+                    <p>Pr&eacute;sence en ligne, strat&eacute;gie de contenu, r&eacute;seaux sociaux et communication interne.</p>
+                    <a href="communication.html">D&eacute;couvrir &rarr;</a>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon">🌐</div>
+                    <h3>Cr&eacute;ation &amp; Refonte de sites web</h3>
+                    <p>UX/UI, d&eacute;veloppement, SEO et maintenance pour une pr&eacute;sence web professionnelle.</p>
+                    <a href="sites-web.html">D&eacute;couvrir &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="model">
+            <h2 class="section-title">Un accompagnement progressif</h2>
+            <div class="model-grid">
+                <div class="model-card"><h4>Diagnostic</h4><p>Un premier &eacute;change pour comprendre vos enjeux et objectifs.</p></div>
+                <div class="model-card"><h4>Accompagnement</h4><p>Un plan d&rsquo;action concret, avec un suivi r&eacute;gulier.</p></div>
+                <div class="model-card"><h4>Retainer</h4><p>Un partenariat continu pour s&eacute;curiser vos r&eacute;sultats dans la dur&eacute;e.</p></div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Discutons de votre projet</h2>
+            <p>Chaque organisation est diff&eacute;rente&nbsp;: parlons de vos besoins pour construire un accompagnement sur mesure.</p>
+            <a href="contact.html" class="btn btn-or">Nous contacter &rarr;</a>
+        </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="ft-grid">
+          <div class="ft-brand">
+            <a href="index.html" class="logo"><div class="logo-mark"><img src="assets/Logo MySam.png" class="logo-img" alt="MySam"/></div><div><span class="logo-text">MySam</span><span class="logo-sub" style="color:rgba(255,255,255,.4)">Conseil &amp; Service</span></div></a>
+            <p>MySam accompagne entreprises, particuliers et publics fragilis&eacute;s vers des solutions concr&egrave;tes, humaines et durables.</p>
+            <div class="ft-social"><a href="#" class="soc">in</a><a href="#" class="soc">𝕏</a><a href="#" class="soc">f</a><a href="#" class="soc">●</a></div>
+          </div>
+          <div class="ft-col"><h4>Univers</h4><ul><li><a href="particuliers.html">Particuliers</a></li><li><a href="entreprises.html">Entreprises</a></li><li><a href="commerces.html">Commerces</a></li><li><a href="actualites.html">Actualit&eacute;s</a></li></ul></div>
+          <div class="ft-col"><h4>Services entreprises</h4><ul><li><a href="rh-conseil.html">RH &amp; Conseil</a></li><li><a href="communication.html">Communication</a></li><li><a href="sites-web.html">Sites Web</a></li></ul></div>
+          <div class="ft-col"><h4>Nous contacter</h4><div class="ft-contacts"><div class="fci"><div class="fci-ico">📍</div><div><strong>Adresse</strong><span>France &mdash; pr&eacute;sentiel &amp; distanciel</span></div></div><div class="fci"><div class="fci-ico">✉️</div><div><strong>Email</strong><span>mysam.officiel@gmail.com</span></div></div><div class="fci"><div class="fci-ico">📞</div><div><strong>T&eacute;l&eacute;phone</strong><span>06 69 25 53 04</span></div></div></div></div>
+        </div>
+        <div class="ft-bot"><p>&copy; 2025 MySam Conseil &amp; Service. Tous droits r&eacute;serv&eacute;s.</p><div class="ft-links"><a href="mentions-legales.html">Mentions l&eacute;gales</a><a href="politique-confidentialite.html">Confidentialit&eacute;</a><a href="cgu.html">CGU</a></div></div>
+      </div>
+    </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      var nb=document.getElementById('navbar');
+      window.addEventListener('scroll',function(){nb.classList.toggle('s',window.scrollY>20);});
+    });
+    </script>
+</body>
+</html>
