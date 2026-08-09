@@ -227,6 +227,31 @@ ul{list-style:none}
 .ptn-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 
 /* TRUST BAR */
+.univers{padding:120px 0;background:var(--ow)}
+.uni-head{max-width:640px;margin:0 auto 56px;text-align:center}
+.uni-head .sec-label{justify-content:center}
+.uni-h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:var(--td);margin-bottom:12px}
+.uni-sub{color:var(--tm);font-size:1rem;line-height:1.7}
+.uni-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.uni-card{display:flex;flex-direction:column;background:var(--wh);border:1.5px solid var(--bd);border-radius:20px;padding:36px 30px;transition:all .3s ease;position:relative;overflow:hidden}
+.uni-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(59,31,107,.14)}
+.uni-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px}
+.uni-c1::before{background:var(--sp)}
+.uni-c2::before{background:linear-gradient(90deg,var(--dp),var(--mp))}
+.uni-c3::before{background:var(--or)}
+.uni-ico{font-size:2.2rem;margin-bottom:14px}
+.uni-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mp);margin-bottom:6px}
+.uni-c3 .uni-eyebrow{color:var(--oh)}
+.uni-card h3{font-size:1.3rem;font-weight:700;color:var(--td);margin-bottom:18px}
+.uni-list{margin-bottom:24px;flex:1}
+.uni-list li{position:relative;padding-left:20px;color:var(--tm);font-size:.9rem;line-height:2}
+.uni-list li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--lm)}
+.uni-c3 .uni-list li::before{background:var(--or)}
+.uni-cta{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--mp);font-size:.92rem}
+.uni-c3 .uni-cta{color:var(--oh)}
+.uni-card:hover .uni-cta svg{transform:translateX(4px)}
+.uni-cta svg{transition:transform .2s}
+
 .trust{padding:60px 0;background:linear-gradient(135deg,var(--ll) 0%,#F5EEFF 100%)}
 .trust-in{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
 .trust-in h3{font-size:1.4rem;font-weight:700;color:var(--dp);margin-bottom:6px}
@@ -355,6 +380,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
 /* RESPONSIVE */
 @media(max-width:1024px){
   .intro-grid,.hero-grid,.b2c-grid,.zodiac-grid,.aurora-grid{grid-template-columns:1fr;gap:48px}
+  .uni-grid{grid-template-columns:1fr 1fr}
   .mq-stage{height:360px}
   .plans{grid-template-columns:1fr;max-width:380px;margin:0 auto}
   .plan.pop{transform:none}.plan.pop:hover{transform:translateY(-4px)}
@@ -367,6 +393,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
   .nav-links,.nav-login{display:none}
   .hburg{display:flex}
   .hero-stats,.intro-ctas{flex-direction:column;gap:14px}
+  .uni-grid{grid-template-columns:1fr}
   .ft-grid{grid-template-columns:1fr;gap:28px}
   .trust-nums{gap:20px}
   .c3{display:none}
@@ -428,16 +455,15 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
 <nav class="nav" id="navbar">
   <div class="container">
     <div class="nav-in">
-      <a href="#home" class="logo">
+      <a href="index.html" class="logo">
         <div class="logo-mark"><img src="assets/Logo MySam.png" alt="MySam" class="logo-img"/></div>
         <div><span class="logo-text">MySam</span><span class="logo-sub">Conseil &amp; Service</span></div>
       </a>
       <ul class="nav-links">
-        <li><a href="#home">Accueil</a></li>
-        <li><a href="#zodiac">Zodiac</a></li>
-        <li><a href="aurora.html">Aurora</a></li>
+        <li><a href="particuliers.html">Particuliers</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+        <li><a href="commerces.html">Commerces</a></li>
         <li><a href="actualites.html">Actualit&eacute;s</a></li>
-        <li><a href="rendezvous.html">Rendez-vous</a></li>
         <li><a href="contact.html">Contactez-nous</a></li>
       </ul>
       <div class="nav-acts">
@@ -450,7 +476,7 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
 </nav>
 
 <!-- INTRO -->
-<section class="intro" id="intro">
+<section class="intro" id="top">
   <div class="intro-spot"></div>
   <div class="intro-pts" id="ipts"></div>
   <div class="intro-fade"></div>
@@ -459,10 +485,10 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
       <div class="fu">
         <div class="intro-launch">&#127775; Lanc&eacute; en 2025</div>
         <div class="intro-eye"><span class="eye-pulse"></span>MySam &mdash; Conseil &amp; Service</div>
-        <h1 class="intro-h1">Approche&nbsp;Personnalis&eacute;e.<br/>Solutions&nbsp;Concr&egrave;tes.</h1>
-        <p class="intro-sub">L&rsquo;expertise humaine au service de vos projets.<br/>Accompagnement sur mesure pour entreprises, particuliers et publics en r&eacute;insertion.</p>
+        <h1 class="intro-h1">Trouvez la solution<br/>qui vous correspond.</h1>
+        <p class="intro-sub">MySam accompagne particuliers, entreprises et petits commerces avec des solutions d&eacute;di&eacute;es &agrave; chaque situation.</p>
         <div class="intro-ctas">
-          <a href="#home" class="btn btn-or">D&eacute;couvrir MySam <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          <a href="#univers" class="btn btn-or">D&eacute;couvrir les univers <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
           <a href="#pricing" class="btn btn-owh">Voir les offres</a>
         </div>
         <div class="intro-badges">
@@ -488,120 +514,48 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
   </div>
 </section>
 
-<!-- HERO B2B -->
-<section class="hero" id="home">
-  <div class="hero-bg"></div>
+<!-- UNIVERS -->
+<section class="univers" id="univers">
   <div class="container">
-    <div class="hero-grid">
-      <div class="fu">
-        <div class="hero-brow"><span class="hero-brow-dot"></span>Solutions Entreprises</div>
-        <h2 class="hero-h2">Structurez votre strat&eacute;gie,<br/><em>lib&eacute;rez le potentiel</em><br/>de vos &eacute;quipes.</h2>
-        <p class="hero-p">MySam accompagne les organisations dans leurs enjeux RH, de communication et de transformation &mdash; de la r&eacute;flexion strat&eacute;gique jusqu&rsquo;&agrave; la mise en&nbsp;&oelig;uvre op&eacute;rationnelle.</p>
-        <a href="contact.html" class="btn btn-wh">Acc&eacute;der aux solutions <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-        <div class="hero-stats">
-          <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Clients accompagn&eacute;s</div></div>
-          <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Taux de satisfaction</div></div>
-          <div class="stat"><div class="stat-n">100%</div><div class="stat-l">D&eacute;di&eacute; &agrave; votre succ&egrave;s</div></div>
-        </div>
-      </div>
-      <div class="hero-card fu d2">
-        <div class="hero-card-ico">🏢</div>
-        <h3>Conseil &amp; Accompagnement RH</h3>
-        <p>Vous cherchez &agrave; structurer votre strat&eacute;gie RH, renforcer votre communication ou accompagner vos &eacute;quipes&nbsp;? MySam intervient sur des enjeux vari&eacute;s.</p>
-        <div class="card-tags">
-          <span class="tag">Strat&eacute;gie RH</span><span class="tag">Communication interne</span>
-          <span class="tag">Formation</span><span class="tag">Team Building</span>
-        </div>
-        <a href="contact.html" class="btn btn-or">Nous contacter <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </div>
+    <div class="uni-head fu">
+      <div class="sec-label"><span class="sec-label-line"></span>Trois univers, une seule adresse</div>
+      <h2 class="uni-h2">Une solution pour chaque situation</h2>
+      <p class="uni-sub">Choisissez votre profil pour acc&eacute;der aux services qui vous concernent.</p>
     </div>
-  </div>
-</section>
-
-<!-- B2C — ACCOMPAGNEMENT PARTICULIERS (layout original blanc) -->
-<section class="b2c" id="particuliers">
-  <div class="container">
-    <div class="b2c-grid">
-      <div class="b2c-img fu">
-        <img src="https://images.unsplash.com/photo-1573497161161-c3e73707e25c?w=900&q=80" alt="Session de coaching individuel" />
-        <div class="b2c-badge">
-          <div class="b2c-badge-ico">🌟</div>
-          <div><strong>Suivi personnalis&eacute;</strong><span>&Agrave; chaque &eacute;tape de votre parcours</span></div>
-        </div>
-      </div>
-      <div class="fu d1">
-        <div class="sec-label"><span class="sec-label-line"></span>Accompagnement Particuliers</div>
-        <h2 class="b2c-cnt" style="font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;color:var(--dp);line-height:1.2;margin-bottom:20px">Un soutien <span style="color:var(--sp)">professionnel</span> taill&eacute; sur mesure pour vous.</h2>
-        <p style="font-size:1rem;line-height:1.75;color:var(--tm);margin-bottom:28px">Vous avez besoin d&rsquo;un regard professionnel pour avancer dans votre parcours, pr&eacute;parer une candidature ou structurer un projet. MySam vous accompagne de fa&ccedil;on concr&egrave;te, avec des outils et des conseils adapt&eacute;s &agrave; votre situation.</p>
-        <div class="feat-list">
-          <div class="feat"><div class="feat-ico fi-pu">🎯</div><div><strong>Bilan de comp&eacute;tences</strong><span>Clarifiez votre orientation professionnelle et vos atouts cl&eacute;s</span></div></div>
-          <div class="feat"><div class="feat-ico fi-or">📝</div><div><strong>Pr&eacute;paration aux candidatures</strong><span>CV, lettres de motivation, entra&icirc;nement aux entretiens</span></div></div>
-          <div class="feat"><div class="feat-ico fi-gr">🚀</div><div><strong>G&eacute;n&eacute;rateur de CV IA</strong><span>CV optimis&eacute; par l'intelligence artificielle en 2 minutes</span></div></div>
-        </div>
-        <a href="accompagnement.html" class="btn btn-pu">&Ecirc;tre accompagn&eacute; <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ZODIAC -->
-<section class="zodiac" id="zodiac">
-  <div class="container">
-    <div class="zodiac-grid">
-      <div class="fu">
-        <div class="z-badge">Programme exclusif</div>
-        <h2>Programme <span class="acc">Zodiac</span></h2>
-        <p class="z-sub">Public tr&egrave;s &eacute;loign&eacute; de l&rsquo;emploi</p>
-        <p>Certaines situations n&eacute;cessitent un accompagnement sp&eacute;cifique. MySam intervient pour la r&eacute;insertion professionnelle aupr&egrave;s des personnes les plus &eacute;loign&eacute;es de l&rsquo;emploi, en partenariat avec les structures locales.</p>
-        <div class="pillars">
-          <div class="pill"><div class="pill-n">01</div><div><strong>&Eacute;valuation &amp; diagnostic individuel</strong><span>Comprendre la situation, les freins et les ressources de chaque personne</span></div></div>
-          <div class="pill"><div class="pill-n">02</div><div><strong>Ateliers collectifs de remobilisation</strong><span>Retrouver confiance en soi dans un cadre bienveillant</span></div></div>
-          <div class="pill"><div class="pill-n">03</div><div><strong>Accompagnement vers l&rsquo;emploi</strong><span>Mise en relation avec les partenaires jusqu&rsquo;&agrave; l&rsquo;insertion</span></div></div>
-        </div>
-        <a href="contact.html" class="btn btn-or" style="margin-bottom:32px">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-        <!-- LOGOS PARTENAIRES -->
-        <div class="z-ptns">
-          <p class="z-ptns-lbl">Structures partenaires</p>
-          <div class="ptns">
-            <div class="ptn-logo"><div class="ptn-dot" style="background:#00A3E0"></div><span>France Travail</span></div>
-            <div class="ptn-logo"><div class="ptn-dot" style="background:#E2001A"></div><span>Mission Locale</span></div>
-            <div class="ptn-logo"><div class="ptn-dot" style="background:#00875A"></div><span>CCAS</span></div>
-            <div class="ptn-logo"><div class="ptn-dot" style="background:#F7A800"></div><span>CAP Emploi</span></div>
-            <div class="ptn-logo"><div class="ptn-dot" style="background:#6B3FA0"></div><span>SIAE</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="z-img fu d2" style="position:relative">
-        <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=900&q=80" alt="Atelier Programme Zodiac" />
-        <div class="z-ov"></div>
-        <div class="z-quote">
-          <blockquote>&ldquo;Chaque personne m&eacute;rite une chance concr&egrave;te de retrouver sa place dans le monde du travail.&rdquo;</blockquote>
-          <p class="z-quote-auth">&mdash; L&rsquo;&eacute;quipe MySam, Programme Zodiac</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AURORA -->
-<section class="aurora" id="aurora">
-  <div class="container">
-    <div class="aurora-grid">
-      <div class="fu">
-        <div class="aurora-badge">Nouveau programme</div>
-        <h2>Aurora <span class="acc">✨</span></h2>
-        <p class="aurora-sub">R&eacute;v&eacute;lez la lumi&egrave;re de votre commerce local</p>
-        <p>Aurora est un programme d&rsquo;accompagnement exclusif d&eacute;di&eacute; aux petits commerces en c&oelig;ur de ville. Nous aidons les entrepreneurs &agrave; transformer leur pr&eacute;sence physique pour attirer les regards et faire d&eacute;coller les ventes.</p>
-        <div class="aurora-features">
-          <div class="aurora-feat"><div class="aurora-feat-ico">🔍</div><div><strong>Diagnostic sur site</strong><span>Analyse de votre emplacement, des flux et de votre identit&eacute; visuelle</span></div></div>
-          <div class="aurora-feat"><div class="aurora-feat-ico">👥</div><div><strong>Coaching en agencement</strong><span>Formation sur mesure pour vos &eacute;quipes sur la signalétique et l&rsquo;ambiance</span></div></div>
-          <div class="aurora-feat"><div class="aurora-feat-ico">🎨</div><div><strong>Cr&eacute;ation de supports visuels</strong><span>Affches, signalétique personnalis&eacute;e et strat&eacute;gie visuelle adapt&eacute;e</span></div></div>
-        </div>
-        <a href="aurora.html" class="aurora-btn">D&eacute;couvrir Aurora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </div>
-      <div class="aurora-img fu d2">
-        <img src="https://images.unsplash.com/photo-1556740757-46cdc9dcfb83?w=900&q=80" alt="Commerce local beaut&eacute;fully design&eacute;" />
-      </div>
+    <div class="uni-grid fu d1">
+      <a href="particuliers.html" class="uni-card uni-c1">
+        <div class="uni-ico">🎯</div>
+        <div class="uni-eyebrow">Particuliers</div>
+        <h3>Je cherche un emploi</h3>
+        <ul class="uni-list">
+          <li>G&eacute;n&eacute;rer mon CV (IA)</li>
+          <li>Bilan de comp&eacute;tences</li>
+          <li>Pr&eacute;paration candidatures</li>
+        </ul>
+        <span class="uni-cta">Acc&eacute;der <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <a href="entreprises.html" class="uni-card uni-c2">
+        <div class="uni-ico">💼</div>
+        <div class="uni-eyebrow">Entreprises</div>
+        <h3>Je g&egrave;re une &eacute;quipe</h3>
+        <ul class="uni-list">
+          <li>RH &amp; Conseil</li>
+          <li>Communication Digital</li>
+          <li>Cr&eacute;ation Web</li>
+        </ul>
+        <span class="uni-cta">Acc&eacute;der <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <a href="commerces.html" class="uni-card uni-c3">
+        <div class="uni-ico">🌟</div>
+        <div class="uni-eyebrow">Commerces</div>
+        <h3>Je tiens un commerce</h3>
+        <ul class="uni-list">
+          <li>Diagnostic visibilit&eacute;</li>
+          <li>Coaching &eacute;quipe</li>
+          <li>Design supports</li>
+        </ul>
+        <span class="uni-cta">Acc&eacute;der <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
     </div>
   </div>
 </section>
@@ -772,13 +726,11 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
         </div>
       </div>
       <div class="ft-col">
-        <h4>Navigation</h4>
+        <h4>Univers</h4>
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="index.html#home">Solutions Entreprises</a></li>
-          <li><a href="accompagnement.html">Accompagnement Particuliers</a></li>
-          <li><a href="index.html#zodiac">Programme Zodiac</a></li>
-          <li><a href="aurora.html">Aurora</a></li>
+          <li><a href="particuliers.html">Particuliers</a></li>
+          <li><a href="entreprises.html">Entreprises</a></li>
+          <li><a href="commerces.html">Commerces</a></li>
           <li><a href="actualites.html">Actualit&eacute;s</a></li>
         </ul>
       </div>
@@ -1097,7 +1049,9 @@ footer{background:var(--td);color:rgba(255,255,255,.75);padding:80px 0 32px}
         else if(o.next==='__rdv'){window.location.href='rendezvous.html';}
         else if(o.next==='__aurora'){window.location.href='aurora.html';}
         else if(o.next==='__contact'){window.location.href='contact.html';}
-        else if(o.next==='__zodiac'){document.getElementById('zodiac').scrollIntoView({behavior:'smooth'});modal.classList.remove('open');}
+        else if(o.next==='__zodiac'){window.location.href='zodiac.html';}
+        else if(o.next==='__entreprises'){window.location.href='entreprises.html';}
+        else if(o.next==='__commerces'){window.location.href='commerces.html';}
         else{showFlow(o.next);}
       });
       optsEl.appendChild(b);
