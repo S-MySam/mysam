@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MySam IA — les applis de Sam</title>
+<meta name="description" content="Des applis créées par Sam à partir de ses idées. Testez-les, dites ce qui coince, la version suivante arrive." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="MySam IA — les applis de Sam" />
+<meta property="og:description" content="Des applis créées à partir de mes idées. Testez-les, dites-moi ce qui coince, je reviens avec la version d'après." />
+<meta property="og:url" content="https://my-sam.pro/ia.html" />
+<meta property="og:image" content="https://my-sam.pro/assets/mysam-ia/le-globe.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#07040F" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07040F;--dp:#3B1F6B;--mp:#5A2FA3;--sp:#7B4FCF;
+  --ll:#EDE7FF;--lm:#C9B8F0;
+  --or:#FF6B35;--oh:#FF8459;
+  --wh:#FFFFFF;--ow:#FAF9FF;
+  --td:#1A1030;--tm:#4A3870;--tl:#8270AA;
+  --bd:#E0D8F5;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;color:var(--td);background:var(--ow);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:var(--or);color:var(--td)}
+:focus-visible{outline:2px solid var(--mp);outline-offset:3px;border-radius:6px}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* NAV — identique au reste du site */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:40px;height:40px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.logo-img{width:40px;height:40px;object-fit:contain;display:block}
+.logo-text{font-weight:700;font-size:1.2rem;color:var(--dp)}
+.logo-sub{font-size:.65rem;color:var(--tl);font-weight:400;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1}
+.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+.nav-links a{padding:8px 14px;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--tm);white-space:nowrap;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--mp);background:var(--ll)}
+.nav-links a[aria-current="page"]{color:var(--dp);font-weight:600}
+.nav-acts{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.nav-login{font-size:.875rem;font-weight:500;color:var(--mp);padding:8px 12px;border-radius:8px;transition:background .15s}
+.nav-login:hover{background:var(--ll)}
+.hburg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px 4px;border:none;background:none}
+.hburg span{display:block;width:22px;height:2px;background:var(--dp);border-radius:2px}
+
+/* BOUTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:50px;font:600 .95rem/1 'Inter',sans-serif;letter-spacing:.01em;cursor:pointer;border:none;white-space:nowrap;transition:background .15s,transform .2s var(--ease)}
+.btn svg{flex-shrink:0}
+.btn-or{background:var(--or);color:var(--td)}
+.btn-or:hover{background:var(--oh);transform:translateY(-1px)}
+.btn-or:active{transform:translateY(0)}
+.nav .btn{padding:12px 22px}
+.btn-line{background:transparent;color:var(--wh);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--wh)}
+
+/* EN-TÊTE */
+.head{position:relative;background:var(--ink);color:var(--wh);padding:168px 0 104px;overflow:hidden}
+.head::before{content:"";position:absolute;top:-180px;left:-160px;width:760px;height:760px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,rgba(123,79,207,.42) 0%,rgba(90,47,163,.14) 42%,transparent 70%);pointer-events:none}
+.head .container{position:relative}
+.head h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(3rem,8vw,6.25rem);line-height:.98;letter-spacing:-.02em}
+.head h1 span{color:var(--lm)}
+.head-lead{margin-top:28px;max-width:34ch;font-size:clamp(1.1rem,1.8vw,1.35rem);line-height:1.5;color:var(--lm)}
+.head-count{margin-top:40px;font-size:.85rem;font-weight:500;color:rgba(255,255,255,.62)}
+
+/* APPLIS */
+.apps{padding:96px 0 112px}
+.feat{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:center}
+.shot{display:block;position:relative;border-radius:18px;overflow:hidden;background:var(--ink);box-shadow:0 24px 60px -20px rgba(26,16,48,.45),0 2px 6px rgba(26,16,48,.08);aspect-ratio:16/10}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.shot:hover img{transform:scale(1.025)}
+.meta{display:flex;align-items:center;gap:10px;font-size:.8rem;font-weight:600;letter-spacing:.04em;color:var(--mp)}
+.meta i{width:4px;height:4px;border-radius:50%;background:var(--bd);font-style:normal}
+.feat h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2.2rem,4vw,3.25rem);line-height:1.05;letter-spacing:-.015em;margin:14px 0 18px}
+.feat p{font-size:1.08rem;color:var(--tm);max-width:40ch;margin-bottom:32px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:56px 32px;margin-top:120px}
+.grid:empty{display:none}
+.card .shot{border-radius:14px;box-shadow:0 16px 40px -18px rgba(26,16,48,.4),0 1px 4px rgba(26,16,48,.06)}
+.card .meta{margin-top:22px}
+.card h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em;margin:8px 0 8px}
+.card p{font-size:.98rem;color:var(--tm);margin-bottom:20px}
+.card .btn{padding:12px 20px;font-size:.9rem}
+
+.empty{font-size:1.1rem;color:var(--tm)}
+
+/* DEMANDE */
+.ask{background:var(--dp);color:var(--wh);padding:96px 0}
+.ask-in{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:end}
+.ask h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.015em}
+.ask p{margin-top:18px;max-width:46ch;font-size:1.05rem;color:var(--lm)}
+.ask-act{display:flex;justify-content:flex-end}
+.ask :focus-visible{outline-color:var(--lm)}
+
+/* FOOTER */
+footer{background:var(--td);color:rgba(255,255,255,.72);padding:72px 0 32px}
+footer :focus-visible{outline-color:var(--lm)}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:56px}
+.ft-brand .logo-text{color:var(--wh)}
+.ft-brand .logo-sub{color:rgba(255,255,255,.5)}
+.ft-brand>p{margin-top:16px;font-size:.9rem;line-height:1.7;color:rgba(255,255,255,.62);max-width:300px}
+.ft-col h4{font-size:.8rem;font-weight:700;color:var(--wh);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.ft-col ul{display:flex;flex-direction:column;gap:10px}
+.ft-col ul a{font-size:.9rem;color:rgba(255,255,255,.62);transition:color .15s}
+.ft-col ul a:hover{color:var(--wh)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.1);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:.82rem;color:rgba(255,255,255,.5)}
+.ft-links{display:flex;gap:20px}
+.ft-links a:hover{color:var(--wh)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ENTRÉE — un seul moment : l'appli mise en avant */
+.feat{animation:rise .7s var(--ease) both .1s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+@media(max-width:1024px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .feat,.ask-in{grid-template-columns:1fr;gap:32px}
+  .ask-act{justify-content:flex-start}
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .ft-brand{grid-column:1/-1}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .nav-links,.nav-login{display:none}
+  .hburg{display:flex}
+  .nav-acts{gap:6px}
+  .nav .btn{padding:10px 16px;font-size:.85rem}
+  .head{padding:128px 0 72px}
+  .apps{padding:56px 0 80px}
+  .grid{grid-template-columns:1fr;gap:48px;margin-top:80px}
+  .ask{padding:72px 0}
+  .feat .btn,.ask .btn{width:100%}
+}
+@media(max-width:420px){
+  .logo-sub{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <div class="container">
+    <div class="nav-in">
+      <a href="index.html" class="logo">
+        <div class="logo-mark"><img src="assets/Logo MySam.png" alt="MySam" class="logo-img" width="40" height="40"/></div>
+        <div><span class="logo-text">MySam</span><span class="logo-sub">Conseil &amp; Service</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="particuliers.html">Particuliers</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+        <li><a href="commerces.html">Commerces</a></li>
+        <li><a href="actualites.html">Actualit&eacute;s</a></li>
+        <li><a href="ia.html" aria-current="page">MySam IA</a></li>
+      </ul>
+      <div class="nav-acts">
+        <a href="connexion.html" class="nav-login">Se connecter</a>
+        <a href="contact.html" class="btn btn-or">Contactez-nous</a>
+      </div>
+      <button class="hburg" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <header class="head">
+    <div class="container">
+      <h1>MySam <span>IA</span></h1>
+      <p class="head-lead">Des applis que je cr&eacute;e &agrave; partir de mes id&eacute;es. Testez-les, dites-moi ce qui coince, je reviens avec la version d&rsquo;apr&egrave;s.</p>
+      <p class="head-count" id="count" aria-live="polite"></p>
+    </div>
+  </header>
+
+  <section class="apps" aria-label="Les applis">
+    <div class="container">
+      <div id="feat"></div>
+      <div class="grid" id="grid"></div>
+      <noscript><p class="empty">Activez JavaScript pour voir les applis.</p></noscript>
+    </div>
+  </section>
+
+  <section class="ask">
+    <div class="container ask-in">
+      <div>
+        <h2>Une id&eacute;e d&rsquo;outil&nbsp;?</h2>
+        <p>Un besoin, un bug, un truc qui manque sur une appli&nbsp;: &eacute;crivez-moi. Si l&rsquo;id&eacute;e peut servir &agrave; d&rsquo;autres, on la construit ensemble.</p>
+      </div>
+      <div class="ask-act">
+        <a href="contact.html" class="btn btn-or">M&rsquo;&eacute;crire
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark"><img src="assets/Logo MySam.png" class="logo-img" alt="MySam" width="40" height="40"/></div>
+          <div><span class="logo-text">MySam</span><span class="logo-sub">Conseil &amp; Service</span></div>
+        </a>
+        <p>MySam accompagne entreprises, particuliers et publics fragilis&eacute;s vers des solutions concr&egrave;tes, humaines et durables. Lanc&eacute; en 2025.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Univers</h4>
+        <ul>
+          <li><a href="particuliers.html">Particuliers</a></li>
+          <li><a href="entreprises.html">Entreprises</a></li>
+          <li><a href="commerces.html">Commerces</a></li>
+          <li><a href="actualites.html">Actualit&eacute;s</a></li>
+          <li><a href="ia.html">MySam IA</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Ressources</h4>
+        <ul>
+          <li><a href="contact.html">FAQ &amp; Contact</a></li>
+          <li><a href="connexion.html">Espace client</a></li>
+          <li><a href="rendezvous.html">Prendre rendez-vous</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p>&copy; 2025 MySam Conseil &amp; Service. Tous droits r&eacute;serv&eacute;s.</p>
+      <div class="ft-links">
+        <a href="mentions-legales.html">Mentions l&eacute;gales</a>
+        <a href="politique-confidentialite.html">Confidentialit&eacute;</a>
+        <a href="cgu.html">CGU</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/mysam-ia/apps.js"></script>
+<script src="assets/nav-mobile.js"></script>
+<script>
+(function(){
+  var apps = Array.isArray(window.MYSAM_APPS) ? window.MYSAM_APPS : null;
+  var feat = document.getElementById('feat');
+  var grid = document.getElementById('grid');
+  var count = document.getElementById('count');
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  var ICON_OPEN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>';
+  var ICON_DL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>';
+
+  function linkAttrs(a){
+    return a.bouton === 'telecharger'
+      ? 'href="' + esc(a.lien) + '" download'
+      : 'href="' + esc(a.lien) + '" target="_blank" rel="noopener"';
+  }
+  function button(a){
+    var dl = a.bouton === 'telecharger';
+    return '<a class="btn btn-or" ' + linkAttrs(a) + '>' +
+      (dl ? 'T&eacute;l&eacute;charger' : 'Ouvrir l&rsquo;appli') +
+      (dl ? '' : '<span class="sr"> (nouvel onglet)</span>') +
+      (dl ? ICON_DL : ICON_OPEN) + '</a>';
+  }
+  function shot(a, eager){
+    return '<a class="shot" ' + linkAttrs(a) + ' tabindex="-1" aria-hidden="true">' +
+      '<img src="' + esc(a.visuel) + '" alt="" width="1600" height="1000"' + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + '></a>';
+  }
+  function meta(a){
+    var bits = [a.version, a.statut].filter(Boolean).map(esc);
+    return bits.length ? '<div class="meta">' + bits.join('<i></i>') + '</div>' : '';
+  }
+
+  if (!apps) {
+    feat.innerHTML = '<p class="empty">Les applis n&rsquo;ont pas pu se charger. Rechargez la page.</p>';
+    return;
+  }
+  if (!apps.length) {
+    feat.innerHTML = '<p class="empty">Premi&egrave;re appli tr&egrave;s bient&ocirc;t.</p>';
+    return;
+  }
+
+  count.textContent = apps.length + (apps.length > 1 ? ' applis disponibles' : ' appli disponible');
+
+  var first = apps[0];
+  feat.innerHTML =
+    '<article class="feat">' + shot(first, true) +
+      '<div>' + meta(first) +
+        '<h2>' + esc(first.nom) + '</h2>' +
+        '<p>' + esc(first.description) + '</p>' +
+        button(first) +
+      '</div>' +
+    '</article>';
+
+  grid.innerHTML = apps.slice(1).map(function(a){
+    return '<article class="card">' + shot(a, false) + meta(a) +
+      '<h3>' + esc(a.nom) + '</h3>' +
+      '<p>' + esc(a.description) + '</p>' + button(a) + '</article>';
+  }).join('');
+})();
+</script>
+</body>
+</html>
